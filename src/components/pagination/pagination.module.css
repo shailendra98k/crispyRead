@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.button {
+  width: 100px;
+  border: none;
+  padding: 16px;
+  background-color: #60040f;
+  color: white;
+  cursor: pointer;
+}
+
+.button:disabled{
+  background-color: #60040f;
+  cursor: not-allowed;
+  opacity: 0.5;
+}

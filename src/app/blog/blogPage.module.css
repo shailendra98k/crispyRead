@@ -1,0 +1,35 @@
+.title {
+  color: #626262 ;
+  padding: 5px 10px;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.entertainment {
+  background-color: #57c4ff31;
+}
+
+.education {
+  background-color: #da85c731;
+}
+
+.news {
+  background-color: #7fb88133;
+}
+
+.sports {
+  background-color: #ff795736;
+}
+
+.automobile {
+  background-color: #ffb04f45;
+}
+
+.food {
+  background-color: #5e4fff31;
+}
+
+.content {
+  display: flex;
+  gap: 50px;
+}
