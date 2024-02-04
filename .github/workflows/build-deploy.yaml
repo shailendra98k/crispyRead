@@ -15,6 +15,10 @@ jobs:
           pwd
           ls
 
+      - name: Create log file
+        run: |
+          touch app.log
+         
       - name: Create ENV file
         run: |
           touch .env

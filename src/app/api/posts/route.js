@@ -4,12 +4,14 @@ import Post from "@/schema/Post";
 import User from "@/schema/User";
 import { POST_PER_PAGE } from "@/utils/constant";
 import { where } from "sequelize";
+import { logger } from "../../../../logger";
 
 export const GET = async (req) => {
   const { searchParams } = new URL(req.url);
 
   const page = searchParams?.get("page");
   const category = searchParams?.get("category")?.toLowerCase();
+  logger.info(`GET api/posts/?page=${page}&categoty=${category}`);
 
   const whereClause = !!category ? { category: category } : {};
 
@@ -23,11 +25,12 @@ export const GET = async (req) => {
 
     const count = await Post.count({ where: whereClause });
     const postsArray = posts.map((post) => post.get({ plain: true }));
+    logger.info(`Received ${count} posts`);
     return new NextResponse(JSON.stringify({ a: postsArray, b: count }), {
       status: 200,
     });
   } catch (err) {
-    console.error(err);
+    logger.error(`Error occured while fetching all posts : ${err}`);
     return new NextResponse(
       JSON.stringify({ message: "Something went wrong!" }, { status: 500 })
     );
