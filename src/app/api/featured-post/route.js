@@ -6,7 +6,7 @@ export const GET = async (req, { params }) => {
   try {
     logger.info(`GET api/featured-post`);
     const post = await Post.findOne({ where: { featured: true } });
-    logger.error(`Received featured post : ${post.slug} `);
+    logger.info(`Received featured post : ${post.slug}`);
     return new NextResponse(JSON.stringify(post, { status: 200 }));
   } catch (err) {
     logger.error(`Error occured while fetching post:  ${err}`);

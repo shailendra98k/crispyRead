@@ -31,6 +31,7 @@ jobs:
           echo MONGO_USER="${{ secrets.MONGO_USER}}" >> .env
           echo MONGO_USER_PASSWORD="${{ secrets.MONGO_USER_PASSWORD}}" >> .env
           echo ACCESS_TOKEN="${{ secrets.ACCESS_TOKEN}}" >> .env
+          echo BASE_URL="${{ secrets.BASE_URL}}" >> .env
 
 
       - name: Build Docker Image
