@@ -35,7 +35,7 @@ RUN npm run build
 # RUN npm install -g serve
 
 # Expose the port on which your React app will run (typically 80 for HTTP)
-EXPOSE 3000
+EXPOSE 80
 
 # Command to start the production server
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "dev"]
