@@ -18,25 +18,27 @@ RUN npm run build
 
 
 # Use a lightweight Node.js image as the final production image
-# FROM node:20-slim
+FROM node:20-slim
 
 # # Set the working directory inside the container
-# WORKDIR /app
+WORKDIR /app
 # RUN npm install next
 # # Copy the necessary files from the build stage (previous FROM)
-# COPY --from=builder /app/package.json ./package.json
-# COPY --from=builder /app/.env ./.env
-# COPY --from=builder /app/public ./public
+COPY --from=builder /app/.next/standalone ./standalone
+COPY --from=builder /app/.next/static ./standalone/.next/static
+COPY --from=builder /app/public ./standalone/public
 
 # # Copy the build files from the build stage (previous FROM)
 # COPY --from=builder /app/.next ./.next
 
 # Install serve to run the production server
 # RUN npm install -g serve
-
+ENV PORT=80
+ENV HOSTNAME='0.0.0.0'
 # Expose the port on which your React app will run (typically 80 for HTTP)
 EXPOSE 80
 EXPOSE 443
+EXPOSE 3000
 
-# Command to start the production server
-CMD ["npm", "run", "dev"]
+
+CMD [ "node","./standalone/server.js" ]
