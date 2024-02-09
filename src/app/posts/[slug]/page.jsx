@@ -7,7 +7,9 @@ import { BASE_URL } from "@/utils/constant";
 import { options } from "pg/lib/defaults";
 
 const getData = async (slug) => {
-  const res = await axios.get(`${BASE_URL}/api/posts/${slug}`);
+  const res = await axios.get(`${BASE_URL}/api/posts/${slug}`, {
+    headers: noCacheHeader,
+  });
   if (res.status !== 200) {
     throw new Error("Failed");
   }

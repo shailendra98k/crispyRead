@@ -2,11 +2,14 @@ import React from "react";
 import styles from "./featured.module.css";
 import Image from "next/image";
 import axios from "axios";
-import { BASE_URL } from "@/utils/constant";
+import { BASE_URL, noCacheHeader } from "@/utils/constant";
 import Link from "next/link";
 
 const getData = async () => {
-  const res = await axios.get(`${BASE_URL}/api/featured-post`);
+  const res = await axios.get(`${BASE_URL}/api/featured-post`, {
+    headers: noCacheHeader,
+  });
+
   if (res.status !== 200) {
     throw new Error("Failed");
   }

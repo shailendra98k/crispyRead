@@ -44,7 +44,7 @@ const WritePage = () => {
   const [category, setCategory] = useState("");
 
   useEffect(() => {
-    if (getCookie("auth") != process.env.ACCESS_TOKEN) {
+    if (getCookie("auth") != process.env.NEXT_PUBLIC_ACCESS_TOKEN) {
       router.push("/");
     }
   }, [router]);

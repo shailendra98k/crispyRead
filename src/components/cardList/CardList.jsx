@@ -5,11 +5,14 @@ import Image from "next/image";
 import Card from "../card/Card";
 import axios from "axios";
 import LOGGER from "@/utils/logger";
-import { BASE_URL, POST_PER_PAGE } from "@/utils/constant";
+import { BASE_URL, noCacheHeader, POST_PER_PAGE } from "@/utils/constant";
 
 const getData = async (page, category) => {
   const res = await axios.get(
-    `${BASE_URL}/api/posts/?page=${page}&category=${category || ""}`
+    `${BASE_URL}/api/posts/?page=${page}&category=${category || ""}`,
+    {
+      headers: noCacheHeader,
+    }
   );
 
   return {

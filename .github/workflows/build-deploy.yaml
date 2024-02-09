@@ -30,7 +30,7 @@ jobs:
           echo MONGO_CONN_URL="${{ secrets.MONGO_CONN_URL}}" >> .env
           echo MONGO_USER="${{ secrets.MONGO_USER}}" >> .env
           echo MONGO_USER_PASSWORD="${{ secrets.MONGO_USER_PASSWORD}}" >> .env
-          echo ACCESS_TOKEN="${{ secrets.ACCESS_TOKEN}}" >> .env
+          echo NEXT_PUBLIC_ACCESS_TOKEN="${{ secrets.ACCESS_TOKEN}}" >> .env
           echo BASE_URL="${{ secrets.BASE_URL}}" >> .env
 
 

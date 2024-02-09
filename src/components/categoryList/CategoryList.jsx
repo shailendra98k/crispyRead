@@ -3,16 +3,18 @@ import styles from "./categoryList.module.css";
 import Link from "next/link";
 import Image from "next/image";
 import axios from "axios";
-import { BASE_URL } from "@/utils/constant";
+import { BASE_URL, noCacheHeader } from "@/utils/constant";
 
 const getData = async () => {
-  const res = await axios.get(`${BASE_URL}/api/categories`);
+  const res = await axios.get(`${BASE_URL}/api/categories`, {
+    headers: noCacheHeader,
+  });
 
   if (res.status != 200) {
     throw new Error("Failed");
   }
 
-  return res.data
+  return res.data;
 };
 
 const CategoryList = async () => {
