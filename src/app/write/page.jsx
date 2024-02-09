@@ -43,12 +43,11 @@ const WritePage = () => {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
 
-  // useEffect(() => {
-  //   console.log("auth is: ", getCookie("auth"));
-  //   if (getCookie("auth") != process.env.ACCESS_TOKEN) {
-  //     router.push("/");
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (getCookie("auth") != process.env.ACCESS_TOKEN) {
+      router.push("/");
+    }
+  }, [router]);
 
   if (status === "loading") {
     return <div className={styles.loading}>Loading...</div>;
