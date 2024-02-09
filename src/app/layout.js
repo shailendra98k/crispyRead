@@ -6,6 +6,7 @@ import { ThemeContextProvider } from "@/context/ThemeContext";
 import ThemeProvider from "@/providers/ThemeProvider";
 import AuthProvider from "@/providers/AuthProvider";
 import { Suspense } from "react";
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,6 +20,19 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <link rel="icon" type="image/x-icon" href="./favicon.ico" />
+      <Script
+        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
+        strategy="afterInteractive"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+        window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', "${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}");
+        `}
+      </Script>
       <Suspense
         fallback={
           <div style={{ postion: "absolute", top: "300px" }}>Loading...</div>
