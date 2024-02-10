@@ -37,6 +37,11 @@
   color: var(--softTextColor);
 }
 
+.desc a {
+  text-decoration: underline;
+  color: #60040f;
+}
+
 .link {
   border-bottom: 1px solid #60040f;
   color: #60040f;
