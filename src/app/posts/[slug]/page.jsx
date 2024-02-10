@@ -3,7 +3,7 @@ import styles from "./singlePage.module.css";
 import Image from "next/image";
 import Comments from "@/components/comments/Comments";
 import axios from "axios";
-import { BASE_URL } from "@/utils/constant";
+import { BASE_URL, noCacheHeader } from "@/utils/constant";
 import { options } from "pg/lib/defaults";
 
 const getData = async (slug) => {

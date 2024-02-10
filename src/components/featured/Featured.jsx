@@ -43,7 +43,7 @@ const Featured = async () => {
           <h1 className={styles.postTitle}>{data.title}</h1>
           <div
             className={styles.postDec}
-            dangerouslySetInnerHTML={{ __html: data?.desc?.substring(0, 1000) }}
+            dangerouslySetInnerHTML={{ __html: `${data?.desc?.substring(0, 1500)}` }}
           />
           <Link href={`/posts/${data.slug}`} className={styles.link}>
             Read More
