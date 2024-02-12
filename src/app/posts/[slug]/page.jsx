@@ -36,7 +36,7 @@ const Comp = ({ data }) => {
     ele.innerHTML = data.socialMediaLink1;
     document
       .getElementsByTagName("p")
-      [data.socialMediaLinkIndex1].appendChild(ele);
+      [data.socialMediaLinkIndex1]?.appendChild(ele);
   }, []);
 
   return (
