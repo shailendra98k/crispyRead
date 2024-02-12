@@ -1,4 +1,5 @@
 export const BASE_URL = "http://localhost";
+export const BASE_URL_CLIENT = process.env.BASE_URL
 export const POST_PER_PAGE = 6;
 export const categoryList = [
   "News",

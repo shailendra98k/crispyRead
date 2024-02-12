@@ -9,7 +9,7 @@ import { options } from "pg/lib/defaults";
 import * as React from "react";
 
 const getData = async (slug) => {
-  const res = await axios.get(`${BASE_URL}/api/posts/${slug}`, {
+  const res = await axios.get(`${BASE_URL_CLIENT}/api/posts/${slug}`, {
     headers: noCacheHeader,
   });
   if (res.status !== 200) {
