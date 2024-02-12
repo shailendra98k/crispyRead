@@ -32,6 +32,7 @@ jobs:
           echo MONGO_USER_PASSWORD="${{ secrets.MONGO_USER_PASSWORD}}" >> .env
           echo NEXT_PUBLIC_ACCESS_TOKEN="${{ secrets.ACCESS_TOKEN}}" >> .env
           echo NEXT_PUBLIC_GOOGLE_ANALYTICS="${{ secrets.GOOGLE_ANALYTICS}}" >> .env
+          echo NEXT_PUBLIC_CLARITY="${{ secrets.CLARITY}}" >> .env
           echo BASE_URL="${{ secrets.BASE_URL}}" >> .env
 
 
