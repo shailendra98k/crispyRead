@@ -8,6 +8,10 @@
   flex: 1;
 }
 
+.description a {
+  text-decoration: underline;
+  color: #60040f;
+}
 .title {
   font-size: 64px;
   /* margin-bottom: 32px; */
@@ -35,7 +39,6 @@
   flex-direction: column;
   gap: 5px;
   /* color: var(--softTextColor); */
-
 }
 
 .username {
@@ -68,6 +71,10 @@
   font-weight: 300;
   margin-bottom: 20px;
 }
+.description iframe {
+  width: 100vw;
+  height: 600px;
+}
 
 @media screen and (max-width: 1536px) {
   .title {
@@ -92,10 +99,10 @@
     color: var(--softTextColor);
   }
   .post img {
-    width: 100%
+    width: 100%;
   }
 
-  .description p{
+  .description p {
     font-size: 18px;
   }
 }

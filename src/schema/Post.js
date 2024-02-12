@@ -39,8 +39,32 @@ Post.init(
       type: DataTypes.BOOLEAN,
       allowNull: true,
     },
+    socialMediaLink1: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    socialMediaLink2: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    socialMediaLink3: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    socialMediaLinkIndex1: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    socialMediaLinkIndex2: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    socialMediaLinkIndex3: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
   },
   { sequelize, modelName: "post" }
 );
-sequelize.sync({ force: false, alter: false })
+sequelize.sync({ force: false, alter: false });
 export default Post;

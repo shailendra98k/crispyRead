@@ -1,3 +1,4 @@
+"use client";
 import Menu from "@/components/Menu/Menu";
 import styles from "./singlePage.module.css";
 import Image from "next/image";
@@ -5,6 +6,7 @@ import Comments from "@/components/comments/Comments";
 import axios from "axios";
 import { BASE_URL, noCacheHeader } from "@/utils/constant";
 import { options } from "pg/lib/defaults";
+import * as React from "react";
 
 const getData = async (slug) => {
   const res = await axios.get(`${BASE_URL}/api/posts/${slug}`, {
@@ -23,17 +25,24 @@ const getData = async (slug) => {
     title: data?.title,
     img: "",
     slug: data?.slug,
+    ...data,
     createdAt: date?.toLocaleDateString("default", { dateStyle: "medium" }),
   };
 };
 
-const SinglePage = async ({ params }) => {
-  const { slug } = params;
-
-  const data = await getData(slug);
+const Comp = ({ data }) => {
+  React.useEffect(() => {
+    const ele = document.createElement("div");
+    ele.innerHTML = data.socialMediaLink1;
+    document
+      .getElementsByTagName("p")
+      [data.socialMediaLinkIndex1].appendChild(ele);
+  }, []);
 
   return (
     <div className={styles.container}>
+      <script async src="https://platform.twitter.com/widgets.js"></script>
+      <script async src="//www.instagram.com/embed.js"></script>
       <div className={styles.infoContainer}>
         <div className={styles.textContainer}>
           <div className={styles.user}>
@@ -54,11 +63,11 @@ const SinglePage = async ({ params }) => {
             </div>
           </div>
         </div>
-        {data?.img && (
+        {/* {data?.img && (
           <div className={styles.imageContainer}>
             <Image src={data.img} alt="" fill className={styles.image} />
           </div>
-        )}
+        )} */}
       </div>
       <div className={styles.content}>
         <div className={styles.post}>
@@ -74,6 +83,14 @@ const SinglePage = async ({ params }) => {
       </div>
     </div>
   );
+};
+
+// eslint-disable-next-line @next/next/no-async-client-component
+const SinglePage = async ({ params }) => {
+  const { slug } = params;
+
+  const data = await getData(slug);
+  return <Comp data={data} />;
 };
 
 export default SinglePage;
