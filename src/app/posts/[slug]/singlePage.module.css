@@ -66,10 +66,29 @@
   margin-top: 48px;
 }
 
+.post img {
+  width: 600px;
+}
+.post h5 {
+  font-size: 1.2rem;
+}
+
+.post h5 a {
+  text-decoration: none;
+}
+
+.post ul {
+  margin-inline-start: 2rem;
+  padding-bottom: 0.5rem;
+}
+
+.post li {
+  padding-top: .5rem;
+}
 .description p {
   font-size: 20px;
   font-weight: 300;
-  margin-bottom: 20px;
+  margin-bottom: 1rem;
 }
 .description iframe {
   width: 100vw;
