@@ -11,6 +11,10 @@ Post.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    seoDescription: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
     img: {
       type: DataTypes.STRING,
       allowNull: true,

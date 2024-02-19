@@ -10,11 +10,6 @@ import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata = {
-  title: "Crispy Read - where content meets clarity",
-  description:
-    "Experience a fresh approach to reading with Crispy Read! Our web app delivers articles in a concise, easy-to-digest format. Say goodbye to information overload and hello to a streamlined reading experience. Stay informed effortlessly with Crispy Read – where content meets clarity!",
-};
 
 export default function RootLayout({ children }) {
   return (

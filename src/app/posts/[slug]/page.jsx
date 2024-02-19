@@ -23,6 +23,7 @@ const getData = async (slug) => {
     _id: data?.id,
     desc: data?.desc,
     title: data?.title,
+    seoDescription: data?.seoDescription,
     img: "",
     slug: data?.slug,
     ...data,
@@ -41,6 +42,8 @@ const Comp = ({ data }) => {
 
   return (
     <div className={styles.container}>
+      <title>{`Crispy Read | ${data.title}`}</title>
+      <meta name="description" content={data.seoDescription} />
       <script async src="https://platform.twitter.com/widgets.js"></script>
       <script async src="//www.instagram.com/embed.js"></script>
       <div className={styles.infoContainer}>
