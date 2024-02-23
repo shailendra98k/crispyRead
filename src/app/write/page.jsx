@@ -122,7 +122,7 @@ const WritePage = () => {
             placeholder="Seo Description"
           />
         </div>
-        <button type="submit" className={styles.publish} onSubmit={handleSubmit}>
+        <button type="button" className={styles.publish} onClick={handleSubmit}>
           Save
         </button>
       </form>

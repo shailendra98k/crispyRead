@@ -17,6 +17,10 @@
   height: 700px;
   position: relative;
 }
+.editor pre {
+  background-color: hsl(0deg 0% 96.47%) !important;
+  color: var(--textColor) !important;
+}
 
 .button,
 .addButton {

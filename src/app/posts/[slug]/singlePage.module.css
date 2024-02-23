@@ -66,7 +66,17 @@
   margin-top: 48px;
 }
 
+.post pre {
+  padding: 8px;
+  background-color: hsl(0deg 0% 96.47%);
+  width: 80% !important
+}
+
 .post img {
+  width: 600px;
+}
+
+.post iframe {
   width: 600px;
 }
 .post h5 {
@@ -83,7 +93,7 @@
 }
 
 .post li {
-  padding-top: .5rem;
+  padding-top: 0.5rem;
 }
 .description p {
   font-size: 20px;
@@ -91,11 +101,16 @@
   margin-bottom: 1rem;
 }
 .description iframe {
-  width: 100vw;
+  width: 300px;
   height: 600px;
 }
 
-.publish{
+.description iframe img{
+  width: 200px;
+  height: 600px;
+}
+
+.publish {
   position: absolute;
   top: 75px;
   right: 20px;
@@ -131,6 +146,18 @@
   }
   .post img {
     width: 100%;
+  }
+
+  .post pre {
+    padding: 8px;
+    background-color: hsl(0deg 0% 96.47%);
+    width: 80vw !important;
+    overflow: scroll;
+    padding:8px
+  }
+
+  .post iframe img {
+    width: 300px;
   }
 
   .description p {
