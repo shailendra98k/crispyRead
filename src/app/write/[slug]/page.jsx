@@ -1,15 +1,49 @@
 "use client";
 
 import Image from "next/image";
-import styles from "./writePage.module.css";
+import styles from "../writePage.module.css";
 import { useState, useMemo, useEffect } from "react";
 import "react-quill/dist/quill.snow.css";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import dynamic from "next/dynamic";
 import axios from "axios";
-import { getCookie } from "@/utils/constant";
-const WritePage = () => {
+import { getCookie, noCacheHeader } from "@/utils/constant";
+
+const getData = async (slug) => {
+  const res = await axios.get(`/api/posts/${slug}`, {
+    headers: noCacheHeader,
+  });
+  if (res.status !== 200) {
+    throw new Error("Failed");
+  }
+
+  const data = res.data;
+
+  const date = new Date(data?.createdAt);
+  return {
+    _id: data?.id,
+    desc: data?.desc,
+    title: data?.title,
+    seoDescription: data?.seoDescription,
+    img: "",
+    slug: data?.slug,
+    ...data,
+    createdAt: date?.toLocaleDateString("default", { dateStyle: "medium" }),
+    published: data?.published,
+  };
+};
+
+// eslint-disable-next-line @next/next/no-async-client-component
+const EditPage = async ({ params }) => {
+  const { slug } = params;
+
+  const data = await getData(slug);
+
+  return <WritePage intialData={data} />;
+};
+
+const WritePage = ({ intialData }) => {
   const { status } = useSession();
   const router = useRouter();
   const ReactQuill = useMemo(
@@ -41,13 +75,17 @@ const WritePage = () => {
   const [media, setMedia] = useState("");
   const [description, setDescription] = useState("");
   const [title, setTitle] = useState("");
+  const [seoDescription, setSeoDescription] = useState("");
   const [category, setCategory] = useState("news");
 
   useEffect(() => {
     if (getCookie("auth") != process.env.NEXT_PUBLIC_ACCESS_TOKEN) {
       router.push("/");
     }
-  }, [router]);
+    setDescription(intialData.desc);
+    setTitle(intialData.title);
+    setSeoDescription(intialData.seoDescription);
+  }, [intialData, router]);
 
   if (status === "loading") {
     return <div className={styles.loading}>Loading...</div>;
@@ -62,16 +100,18 @@ const WritePage = () => {
       .replace(/^-+|-+$/g, "");
 
   const handleSubmit = async () => {
-    const res = await axios.post("/api/posts", {
+    console.log("Hiii, patch calling");
+    const res = await axios.patch("/api/posts", {
       desc: description,
       slug: slugify(title),
       title: title,
       img: file,
       category: category,
       featured: false,
+      id: intialData.id,
     });
 
-    if (res.status === 200) {
+    if (res.status === 200 && res.data) {
       router.push(`/posts/${res.data["slug"]}`);
     }
   };
@@ -85,6 +125,7 @@ const WritePage = () => {
             type="text"
             placeholder="Title"
             className={styles.input}
+            value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
         </div>
@@ -117,17 +158,18 @@ const WritePage = () => {
         </div>
         <div>
           <textarea
+            value={seoDescription}
             required
             style={{ margin: "60px 0px", height: "100px", width: "100%" }}
             placeholder="Seo Description"
           />
         </div>
-        <button type="submit" className={styles.publish} onSubmit={handleSubmit}>
-          Save
+        <button type="button" className={styles.publish} onClick={handleSubmit}>
+          Update
         </button>
       </form>
     </div>
   );
 };
 
-export default WritePage;
+export default EditPage;

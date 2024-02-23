@@ -7,7 +7,7 @@ export const categoryList = [
   "Education",
   "Sports",
   "Automobile",
-  "Food",
+  "Finance",
 ];
 export const getCookie = (name: string) => {
   const value = `; ${document.cookie}`;

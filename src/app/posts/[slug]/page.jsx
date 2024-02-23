@@ -2,11 +2,11 @@
 import Menu from "@/components/Menu/Menu";
 import styles from "./singlePage.module.css";
 import Image from "next/image";
-import Comments from "@/components/comments/Comments";
 import axios from "axios";
-import { BASE_URL_CLIENT, noCacheHeader } from "@/utils/constant";
-import { options } from "pg/lib/defaults";
+import { noCacheHeader } from "@/utils/constant";
 import * as React from "react";
+import { useState } from "react";
+import { getCookie } from "@/utils/constant";
 
 const getData = async (slug) => {
   const res = await axios.get(`/api/posts/${slug}`, {
@@ -28,17 +28,35 @@ const getData = async (slug) => {
     slug: data?.slug,
     ...data,
     createdAt: date?.toLocaleDateString("default", { dateStyle: "medium" }),
+    published: data?.published,
   };
 };
 
-const Comp = ({ data }) => {
+const Comp = ({ data, slug }) => {
+  const [isPublished, setIspublished] = React.useState(0);
+  const [isStaff, setIsStaff] = useState(0);
+
+  const setVisibility = async () => {
+    const res = await axios.patch(`/api/posts/${slug}`, {
+      published: !isPublished,
+    });
+    setIspublished(res.data.published);
+
+    if (res.status !== 200) {
+      throw new Error("Failed");
+    }
+  };
   React.useEffect(() => {
+    if (getCookie("auth") === process.env.NEXT_PUBLIC_ACCESS_TOKEN) {
+      setIsStaff(1);
+    }
+    setIspublished(data.published);
     const ele = document.createElement("div");
     ele.innerHTML = data.socialMediaLink1;
     document
       .getElementsByTagName("p")
       [data.socialMediaLinkIndex1]?.appendChild(ele);
-  }, []);
+  }, [data.published, data.socialMediaLink1, data.socialMediaLinkIndex1]);
 
   return (
     <div className={styles.container}>
@@ -84,6 +102,16 @@ const Comp = ({ data }) => {
         </div>
         {/* <Menu /> */}
       </div>
+      <button
+        style={{
+          display: isStaff ? "block" : "none",
+          background: isPublished ? "#5f050f" : "green",
+        }}
+        className={styles.publish}
+        onClick={setVisibility}
+      >
+        {isPublished ? "Archive" : "Publish"}
+      </button>
     </div>
   );
 };
@@ -93,7 +121,7 @@ const SinglePage = async ({ params }) => {
   const { slug } = params;
 
   const data = await getData(slug);
-  return <Comp data={data} />;
+  return <Comp data={data} slug={slug} />;
 };
 
 export default SinglePage;

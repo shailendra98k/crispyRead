@@ -95,6 +95,18 @@
   height: 600px;
 }
 
+.publish{
+  position: absolute;
+  top: 75px;
+  right: 20px;
+  padding: 10px 20px;
+  border: none;
+  background-color: #1a8917;
+  color: white;
+  cursor: pointer;
+  border-radius: 20px;
+}
+
 @media screen and (max-width: 1536px) {
   .title {
     font-size: 54px;

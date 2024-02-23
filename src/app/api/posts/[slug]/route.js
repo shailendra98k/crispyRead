@@ -18,3 +18,20 @@ export const GET = async (req, { params }) => {
     );
   }
 };
+
+// UPDATE SINGLE POST
+export const PATCH = async (req, { params }) => {
+  const { slug } = params;
+  const body = await req.json();
+
+  try {
+    await Post.update(body, { where: { slug: slug } });
+    const post = await Post.findOne({ where: { slug: slug } });
+    return new NextResponse(JSON.stringify(post, { status: 200 }));
+  } catch (err) {
+    logger.error(`Error occured while updating post by slug :  ${err}`);
+    return new NextResponse(
+      JSON.stringify({ message: "Something went wrong!" }, { status: 500 })
+    );
+  }
+};
