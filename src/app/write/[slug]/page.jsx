@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import dynamic from "next/dynamic";
 import axios from "axios";
+import * as React from "react";
 import { getCookie, noCacheHeader } from "@/utils/constant";
 
 const getData = async (slug) => {
@@ -47,28 +48,67 @@ const WritePage = ({ intialData }) => {
   const { status } = useSession();
   const router = useRouter();
   const ReactQuill = useMemo(
-    () => dynamic(() => import("react-quill"), { ssr: false }),
+    () =>
+      dynamic(
+        async () => {
+          const { default: RQ } = await import("react-quill");
+
+          // eslint-disable-next-line react/display-name
+          return ({ forwardedRef, ...props }) => (
+            <RQ ref={forwardedRef} {...props} />
+          );
+        },
+        {
+          ssr: false,
+        }
+      ),
     []
   );
-  var toolbarOptions = [
-    ["bold", "italic", "underline", "strike"], // toggled buttons
-    ["blockquote", "code-block"],
-    ["image", "link", "video"],
 
-    [{ header: 1 }, { header: 2 }], // custom button values
-    [{ list: "ordered" }, { list: "bullet" }],
-    [{ script: "sub" }, { script: "super" }], // superscript/subscript
-    [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
+  const ImageHandler = (quill, value, callback) => {
+    const range = quill.getSelection(true);
+    const img = `<img src="${value}" alt="External Image"/>`;
 
-    [{ size: ["small", false, "large", "huge"] }], // custom dropdown
-    [{ header: [1, 2, 3, 4, 5, 6, false] }],
+    quill.clipboard.dangerouslyPasteHTML(range.index, img, "api");
+    quill.setSelection(range.index + 1, 0);
+    callback();
+  };
 
-    [{ color: [] }, { background: [] }], // dropdown with defaults from theme
-    [{ font: [] }],
-    [{ align: [] }],
+  const modules = useMemo(
+    () => ({
+      toolbar: {
+        container: [
+          [{ font: [] }],
+          [{ header: [1, 2, 3, 4, 5, 6, false] }],
+          ["bold", "italic", "underline", "strike"],
+          [{ color: [] }, { background: [] }],
+          [{ script: "sub" }, { script: "super" }],
+          ["blockquote", "code-block"],
+          [{ list: "ordered" }, { list: "bullet" }],
+          [{ indent: "-1" }, { indent: "+1" }, { align: [] }],
+          [{ direction: "rtl" }],
+          [{ size: ["small", false, "large", "huge"] }],
+          ["link", "image", "video"],
+          ["clean"],
+        ],
 
-    ["clean"], // remove formatting button
-  ];
+        handlers: {
+          image: () => {
+            const imageUrl = prompt("Enter the image URL");
+            if (imageUrl) {
+              ImageHandler(quillRef.current.getEditor(), imageUrl, () => {});
+            }
+          },
+        },
+        history: {
+          delay: 500,
+          maxStack: 100,
+          userOnly: true,
+        },
+      },
+    }),
+    []
+  );
 
   const [open, setOpen] = useState(false);
   const [file, setFile] = useState(null);
@@ -77,6 +117,7 @@ const WritePage = ({ intialData }) => {
   const [title, setTitle] = useState("");
   const [seoDescription, setSeoDescription] = useState("");
   const [category, setCategory] = useState("news");
+  const quillRef = React.useRef(null);
 
   useEffect(() => {
     if (getCookie("auth") != process.env.NEXT_PUBLIC_ACCESS_TOKEN) {
@@ -144,16 +185,15 @@ const WritePage = ({ intialData }) => {
           </select>
         </div>
 
-        <div className={styles.editor}>
+        <div className={styles.editor} ref={quillRef}>
           <ReactQuill
+            forwardedRef={quillRef}
             className={styles.textArea}
             theme="snow"
             value={description}
             onChange={(value) => setDescription(value)}
             placeholder="Tell your story..."
-            modules={{
-              toolbar: toolbarOptions,
-            }}
+            modules={modules}
           />
         </div>
         <div>
