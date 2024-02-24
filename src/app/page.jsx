@@ -13,7 +13,7 @@ export default function Home({ searchParams }) {
       <title>Crispy Read - Where content meets clarity</title>
       <meta
         name="description"
-        content="Experience a fresh approach to reading and learning with Crispy Read! Our web app delivers freshly brewed artcile on finance, news, entertainment, education and sports, in a concise, easy-to-digest format. Say goodbye to information overload and hello to a streamlined reading experience. Stay informed effortlessly with Crispy Read."
+        content="Experience a fresh approach to reading and learning with Crispy Read! Our web app delivers freshly brewed artcile on finance, news, entertainment, coding and sports, in a concise, easy-to-digest format. Stay informed effortlessly with Crispy Read."
       />
       <Featured />
       <CategoryList />

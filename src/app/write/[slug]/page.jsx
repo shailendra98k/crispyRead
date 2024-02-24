@@ -178,7 +178,7 @@ const WritePage = ({ intialData }) => {
           >
             <option value="news">News</option>
             <option value="entertainment">Entertainment</option>
-            <option value="education">Education</option>
+            <option value="coding">Coding</option>
             <option value="sports">Sports</option>
             <option value="automobile">Automobile</option>
             <option value="finance">Finance</option>
