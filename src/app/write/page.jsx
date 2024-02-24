@@ -13,28 +13,66 @@ const WritePage = () => {
   const { status } = useSession();
   const router = useRouter();
   const ReactQuill = useMemo(
-    () => dynamic(() => import("react-quill"), { ssr: false }),
+    () =>
+      dynamic(
+        async () => {
+          const { default: RQ } = await import("react-quill");
+
+          // eslint-disable-next-line react/display-name
+          return ({ forwardedRef, ...props }) => (
+            <RQ ref={forwardedRef} {...props} />
+          );
+        },
+        {
+          ssr: false,
+        }
+      ),
     []
   );
-  var toolbarOptions = [
-    ["bold", "italic", "underline", "strike"], // toggled buttons
-    ["blockquote", "code-block"],
-    ["image", "link", "video"],
+  const ImageHandler = (quill, value, callback) => {
+    const range = quill.getSelection(true);
+    const img = `<img src="${value}" alt="External Image"/>`;
 
-    [{ header: 1 }, { header: 2 }], // custom button values
-    [{ list: "ordered" }, { list: "bullet" }],
-    [{ script: "sub" }, { script: "super" }], // superscript/subscript
-    [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
+    quill.clipboard.dangerouslyPasteHTML(range.index, img, "api");
+    quill.setSelection(range.index + 1, 0);
+    callback();
+  };
 
-    [{ size: ["small", false, "large", "huge"] }], // custom dropdown
-    [{ header: [1, 2, 3, 4, 5, 6, false] }],
+  const modules = useMemo(
+    () => ({
+      toolbar: {
+        container: [
+          [{ font: [] }],
+          [{ header: [1, 2, 3, 4, 5, 6, false] }],
+          ["bold", "italic", "underline", "strike"],
+          [{ color: [] }, { background: [] }],
+          [{ script: "sub" }, { script: "super" }],
+          ["blockquote", "code-block"],
+          [{ list: "ordered" }, { list: "bullet" }],
+          [{ indent: "-1" }, { indent: "+1" }, { align: [] }],
+          [{ direction: "rtl" }],
+          [{ size: ["small", false, "large", "huge"] }],
+          ["link", "image", "video"],
+          ["clean"],
+        ],
 
-    [{ color: [] }, { background: [] }], // dropdown with defaults from theme
-    [{ font: [] }],
-    [{ align: [] }],
-
-    ["clean"], // remove formatting button
-  ];
+        handlers: {
+          image: () => {
+            const imageUrl = prompt("Enter the image URL");
+            if (imageUrl) {
+              ImageHandler(quillRef.current.getEditor(), imageUrl, () => {});
+            }
+          },
+        },
+        history: {
+          delay: 500,
+          maxStack: 100,
+          userOnly: true,
+        },
+      },
+    }),
+    []
+  );
 
   const [open, setOpen] = useState(false);
   const [file, setFile] = useState(null);
@@ -110,9 +148,7 @@ const WritePage = () => {
             value={description}
             onChange={(value) => setDescription(value)}
             placeholder="Tell your story..."
-            modules={{
-              toolbar: toolbarOptions,
-            }}
+            modules={modules}
           />
         </div>
         <div>
