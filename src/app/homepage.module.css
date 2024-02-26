@@ -1,9 +1,12 @@
-.content{
+.content {
   display: flex;
   gap: 50px;
 }
 
-.content p img {
+.content p {
+  text-align: justify;
+}
+.content p img{
   display: none;
 }
 

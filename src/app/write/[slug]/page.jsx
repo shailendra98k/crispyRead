@@ -126,6 +126,7 @@ const WritePage = ({ intialData }) => {
     setDescription(intialData.desc);
     setTitle(intialData.title);
     setSeoDescription(intialData.seoDescription);
+    setCategory(intialData.category);
   }, [intialData, router]);
 
   if (status === "loading") {
@@ -141,7 +142,6 @@ const WritePage = ({ intialData }) => {
       .replace(/^-+|-+$/g, "");
 
   const handleSubmit = async () => {
-    console.log("Hiii, patch calling");
     const res = await axios.patch("/api/posts", {
       desc: description,
       slug: slugify(title),
@@ -149,6 +149,7 @@ const WritePage = ({ intialData }) => {
       img: file,
       category: category,
       featured: false,
+      seoDescription,
       id: intialData.id,
     });
 
@@ -173,6 +174,7 @@ const WritePage = ({ intialData }) => {
         <div>
           <select
             required
+            value={category}
             style={{ width: 200, padding: "16px", margin: "4px 0px" }}
             onChange={(value) => setCategory(value.target.value)}
           >
@@ -199,6 +201,9 @@ const WritePage = ({ intialData }) => {
         <div>
           <textarea
             value={seoDescription}
+            onChange={(e) => {
+              setSeoDescription(e?.target?.value);
+            }}
             required
             style={{ margin: "60px 0px", height: "100px", width: "100%" }}
             placeholder="Seo Description"
