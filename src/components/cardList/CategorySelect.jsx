@@ -1,5 +1,5 @@
 "use client";
-import { BASE_URL } from "@/utils/constant";
+import { BASE_URL_CLIENT } from "@/utils/constant";
 import React from "react";
 import styles from "./categorySelect.module.css";
 
@@ -7,9 +7,9 @@ const CategorySelect = ({ selectedCategoty = "" }) => {
   const categoryChangehandler = (e) => {
     const category = e.target.value;
     if (category.length) {
-      window.location.href = `${BASE_URL}/blog/?cat=${category}`;
+      window.location.href = `${BASE_URL_CLIENT}/blog/?cat=${category}`;
     } else {
-        window.location.href = `${BASE_URL}`;
+      window.location.href = `${BASE_URL_CLIENT}`;
     }
   };
   return (
