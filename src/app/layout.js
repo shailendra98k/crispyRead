@@ -1,15 +1,7 @@
 import Navbar from "@/components/navbar/Navbar";
 import "./globals.css";
-import { Inter } from "next/font/google";
 import Footer from "@/components/footer/Footer";
-import { ThemeContextProvider } from "@/context/ThemeContext";
-import ThemeProvider from "@/providers/ThemeProvider";
-import AuthProvider from "@/providers/AuthProvider";
-import { Suspense } from "react";
 import Script from "next/script";
-
-const inter = Inter({ subsets: ["latin"] });
-
 
 export default function RootLayout({ children }) {
   return (
@@ -38,25 +30,13 @@ export default function RootLayout({ children }) {
         })(window, document, "clarity", "script", "${process.env.NEXT_PUBLIC_CLARITY}");
         `}
       </Script>
-      <Suspense
-        fallback={
-          <div style={{ postion: "absolute", top: "300px" }}>Loading...</div>
-        }
-      >
-        <body className={inter.className}>
-          <AuthProvider>
-            <ThemeContextProvider>
-              <ThemeProvider>
-                <Navbar />
-                <div className="container">
-                  <div className="wrapper">{children}</div>
-                </div>
-                <Footer />
-              </ThemeProvider>
-            </ThemeContextProvider>
-          </AuthProvider>
-        </body>
-      </Suspense>
+      <body>
+        <Navbar />
+        <div className="container">
+          <div className="wrapper">{children}</div>
+        </div>
+        <Footer />
+      </body>
     </html>
   );
 }

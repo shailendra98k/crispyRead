@@ -1,5 +1,4 @@
 "use client";
-import Menu from "@/components/Menu/Menu";
 import styles from "./singlePage.module.css";
 import Image from "next/image";
 import axios from "axios";
@@ -59,49 +58,11 @@ const Comp = ({ data, slug }) => {
   }, [data.published, data.socialMediaLink1, data.socialMediaLinkIndex1]);
 
   return (
-    <div className={styles.container}>
+    <div>
       <title>{`Crispy Read | ${data.title}`}</title>
       <meta name="description" content={data.seoDescription} />
       <script async src="https://platform.twitter.com/widgets.js"></script>
       <script async src="//www.instagram.com/embed.js"></script>
-      <div className={styles.infoContainer}>
-        <div className={styles.textContainer}>
-          <div className={styles.user}>
-            {data?.user?.image && (
-              <div className={styles.userImageContainer}>
-                <Image
-                  src={data.user.image}
-                  alt=""
-                  fill
-                  className={styles.avatar}
-                />
-              </div>
-            )}
-            <div className={styles.userTextContainer}>
-              <span className={styles.username}>{data?.user?.name}</span>
-              <span className={styles.date}>{data?.createdAt}</span>
-              <h1 className={styles.title}>{data?.title}</h1>
-            </div>
-          </div>
-        </div>
-        {/* {data?.img && (
-          <div className={styles.imageContainer}>
-            <Image src={data.img} alt="" fill className={styles.image} />
-          </div>
-        )} */}
-      </div>
-      <div className={styles.content}>
-        <div className={styles.post}>
-          <div
-            className={styles.description}
-            dangerouslySetInnerHTML={{ __html: data?.desc }}
-          />
-          {/* <div className={styles.comment}>
-            <Comments postSlug={slug} />
-          </div> */}
-        </div>
-        {/* <Menu /> */}
-      </div>
       <button
         style={{
           display: isStaff ? "block" : "none",
@@ -112,6 +73,10 @@ const Comp = ({ data, slug }) => {
       >
         {isPublished ? "Archive" : "Publish"}
       </button>
+      <h1>{data?.title}</h1>
+      <span>{data?.createdAt}</span>
+      <div dangerouslySetInnerHTML={{ __html: data?.desc }} />
+      
     </div>
   );
 };
@@ -121,7 +86,14 @@ const SinglePage = async ({ params }) => {
   const { slug } = params;
 
   const data = await getData(slug);
-  return <Comp data={data} slug={slug} />;
+  return (
+    <div className={styles.container}>
+      <div className={styles.content}>
+        <Comp data={data} slug={slug} />
+      </div>
+      <div className={styles.aside}></div>
+    </div>
+  );
 };
 
 export default SinglePage;

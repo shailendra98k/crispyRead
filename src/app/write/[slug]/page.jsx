@@ -5,7 +5,6 @@ import styles from "../writePage.module.css";
 import { useState, useMemo, useEffect } from "react";
 import "react-quill/dist/quill.snow.css";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
 import dynamic from "next/dynamic";
 import axios from "axios";
 import * as React from "react";
@@ -45,8 +44,6 @@ const EditPage = async ({ params }) => {
 };
 
 const WritePage = ({ intialData }) => {
-  const { status } = useSession();
-  const router = useRouter();
   const ReactQuill = useMemo(
     () =>
       dynamic(
@@ -127,11 +124,8 @@ const WritePage = ({ intialData }) => {
     setTitle(intialData.title);
     setSeoDescription(intialData.seoDescription);
     setCategory(intialData.category);
-  }, [intialData, router]);
+  }, [intialData]);
 
-  if (status === "loading") {
-    return <div className={styles.loading}>Loading...</div>;
-  }
 
   const slugify = (str) =>
     str

@@ -5,12 +5,10 @@ import styles from "./writePage.module.css";
 import { useState, useMemo, useEffect } from "react";
 import "react-quill/dist/quill.snow.css";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
 import dynamic from "next/dynamic";
 import axios from "axios";
 import { getCookie } from "@/utils/constant";
 const WritePage = () => {
-  const { status } = useSession();
   const router = useRouter();
   const ReactQuill = useMemo(
     () =>
@@ -87,9 +85,6 @@ const WritePage = () => {
     }
   }, [router]);
 
-  if (status === "loading") {
-    return <div className={styles.loading}>Loading...</div>;
-  }
 
   const slugify = (str) =>
     str

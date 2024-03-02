@@ -1,8 +1,13 @@
 .container {
   margin-bottom: 50px;
-  display: flex;
   align-items: center;
   gap: 50px;
+  width: 400px;
+}
+
+.container h5 {
+  padding-top: 1rem;
+  margin: 0px;
 }
 
 .imageContainer {
@@ -19,11 +24,12 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 30px;
 }
 
 .date {
   color: gray;
+  text-transform: none;
+  font-size: 0.8rem;
 }
 
 .category {
@@ -43,7 +49,6 @@
 }
 
 .link {
-  border-bottom: 1px solid #60040f;
   color: #60040f;
   width: max-content;
   padding: 2px 0px;
