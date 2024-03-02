@@ -1,10 +1,15 @@
 import CardList from "@/components/cardList/CardList";
 import styles from "./blogPage.module.css";
 import { blogTitleAndDescription } from "@/utils/constant";
+import { notFound } from "next/navigation";
 
 const BlogPage = ({ searchParams }) => {
   const page = parseInt(searchParams.page) || 1;
   const { cat } = searchParams;
+
+  if(!blogTitleAndDescription[cat]) {
+    return notFound()
+  }
 
   return (
     <div className={styles.container}>

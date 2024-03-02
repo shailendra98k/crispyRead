@@ -11,6 +11,10 @@
   flex-wrap: wrap;
   justify-content: space-between;
 }
+.categorySelection {
+  display: flex;
+  flex-direction: row;
+}
 
 @media screen and (max-width: 1024px) {
   .posts {
@@ -20,6 +24,20 @@
 }
 
 @media screen and (max-width: 640px) {
+  .container {
+    width: 80%;
+    padding: 1.5rem;
+    margin: 1rem;
+    margin: auto;
+  }
+  .title {
+    margin: 20px 0px;
+    text-align: center;
+  }
+  .categorySelection {
+    display: flex;
+    flex-direction: column;
+  }
   .posts {
     display: flex;
     justify-content: space-around;
