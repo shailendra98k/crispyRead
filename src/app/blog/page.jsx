@@ -10,10 +10,7 @@ const BlogPage = ({ searchParams }) => {
     <div className={styles.container}>
       <title>{`${blogTitleAndDescription[cat]['title']}`}</title>
       <meta name="description" content={blogTitleAndDescription[cat]['description']} />
-      <h1 className={`${styles.title} ${styles[cat]}`}>{cat}</h1>
-      <div className={styles.content}>
-        <CardList page={page} category={cat} />
-      </div>
+      <CardList page={page} category={cat} />
     </div>
   );
 };

@@ -6,17 +6,33 @@ import Link from "next/link";
 const Card = ({ key, item }) => {
   const date = new Date(item.createdAt);
   return (
-    <div className={styles.container} style={{backgroundColor:'white', padding:'1rem'}}>
+    <div
+      className={styles.container}
+      style={{ backgroundColor: "white", padding: "1rem" }}
+    >
       <Link href={`/posts/${item.slug}`}>
         <img src={item.img} alt="" width={"100%"} height={200} />
         <h3>{item.title}</h3>
-        <div className={styles.date}>
+        <span className={styles.date}>
           {date.toLocaleString("default", { dateStyle: "medium" })}
-        </div>
+          <span style={{ position: "relative", left: "1rem" }}>
+            <img
+              width="16"
+              height="16"
+              style={{ position: "relative", top: "3px" }}
+              src="https://img.icons8.com/forma-thin/24/open-book.png"
+              alt="open-book"
+            />
+            {` ${Math.round(item?.desc?.length/1000)} min read`}
+          </span>
+        </span>
+
         <div
-            style={{textTransform: 'none'}}
-            dangerouslySetInnerHTML={{ __html: `${item?.desc.substring(0, 120)}...` }}
-          />
+          style={{ textTransform: "none" }}
+          dangerouslySetInnerHTML={{
+            __html: `${item?.desc.substring(0, 120)}...`,
+          }}
+        />
       </Link>
 
       <div key={key}>
