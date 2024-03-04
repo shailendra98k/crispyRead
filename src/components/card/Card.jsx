@@ -11,7 +11,7 @@ const Card = ({ key, item }) => {
       style={{ backgroundColor: "white", padding: "1rem" }}
     >
       <Link href={`/posts/${item.slug}`}>
-        <img src={item.img} alt="" width={"100%"} height={200} />
+        <img className={styles.image} src={item.img} alt="" width={"100%"} height={100} />
         <h3>{item.title}</h3>
         <span className={styles.date}>
           {date.toLocaleString("default", { dateStyle: "medium" })}
@@ -28,7 +28,7 @@ const Card = ({ key, item }) => {
         </span>
 
         <div
-          style={{ textTransform: "none" }}
+          className={styles.postDescription}
           dangerouslySetInnerHTML={{
             __html: `${item?.desc.substring(0, 120)}...`,
           }}
