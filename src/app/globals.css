@@ -3,48 +3,52 @@ body {
   margin: 0px;
   padding: 0px;
   background-color: #fbfbfb;
-  font-family: ui-sans-serif,system-ui,"Segoe UI","Roboto","Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-family: ui-sans-serif, system-ui, "Segoe UI", "Roboto", "Helvetica Neue",
+    Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", "Noto Color Emoji";
 }
 
 p {
-    line-height: 2rem;
-    color: #111;
-    letter-spacing: .5px;
-    font-size: 1.2rem;
+  line-height: 2rem;
+  color: #111;
+  letter-spacing: 0.5px;
+  font-size: 1rem;
 }
 
 ul li {
-    letter-spacing: .5px;
-    font-size: 1rem;
-    color: #111;
+  letter-spacing: 0.5px;
+  font-size: 1rem;
+  color: #111;
 }
 
 h1 {
-    color: #5b0f17;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: 600;
-    margin: 0px;
+  color: #5b0f17;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 600;
+  margin: 0px;
+  font-size: 1.8rem;
 }
 
 h3 {
-    color: #5b0f17 !important;
-    font-weight: 500;
-    margin: 0px;
-    font-size: 1.7rem;
+  color: #5b0f17 !important;
+  font-weight: 500;
+  margin: 0px;
+  font-size: 1.7rem;
 }
 
 h3 span {
-    color: #5b0f17 !important;
-    font-weight: 600;
-    margin: 0px;
-    font-size: 2rem;
+  color: #5b0f17 !important;
+  font-weight: 600;
+  margin: 0px;
+  font-size: 2rem;
 }
 
-h5 a , h5 span{
-    text-decoration: none;
-    color: #007aa3 !important;
-    text-transform: uppercase;
-    font-size: 1.5rem;
+h5 a,
+h5 span {
+  text-decoration: none;
+  color: #007aa3 !important;
+  text-transform: uppercase;
+  font-size: 1.5rem;
 }
 
 a {
@@ -52,4 +56,14 @@ a {
   color: #5b0f17;
   font-size: 1rem;
   text-transform: uppercase;
+}
+
+@media screen and (max-width: 640px) {
+  h1 {
+    color: #5b0f17;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    margin: 0px;
+    font-size: 1.6rem;
+  }
 }

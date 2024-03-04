@@ -73,10 +73,10 @@ const Comp = ({ data, slug }) => {
       >
         {isPublished ? "Archive" : "Publish"}
       </button>
+      <button className={styles.categoryBadge}>{data.category}</button>
       <h1>{data?.title}</h1>
-      <span>{data?.createdAt}</span>
+      <span style={{ color: "gray", fontSize: "14px" }}>{data?.createdAt}</span>
       <div dangerouslySetInnerHTML={{ __html: data?.desc }} />
-      
     </div>
   );
 };
