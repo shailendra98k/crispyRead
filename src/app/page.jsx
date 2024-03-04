@@ -12,8 +12,8 @@ export default function Home({ searchParams }) {
         name="description"
         content="Experience a fresh approach to reading and learning with Crispy Read! Our web app delivers freshly brewed artcile on finance, news, entertainment, coding and sports, in a concise, easy-to-digest format. Stay informed effortlessly with Crispy Read."
       />
-      
         <CardList page={page} />
+        <CategoryList/>
       {/* </div> */}
     </div>
   );

@@ -32,7 +32,9 @@ const CardList = async ({ page = 1, category }) => {
     <div className={styles.container}>
       <div className={styles.categorySelection}>
         <div style={{ flexGrow: 1 }}>
-          <h1 className={styles.title}>Recent Posts</h1>
+          <h1 className={styles.title}>
+            {`${category ? category : "All Recent "} Posts`}
+          </h1>
         </div>
         <CategorySelect selectedCategoty={category} />
       </div>

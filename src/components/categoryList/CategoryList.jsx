@@ -9,12 +9,13 @@ const CategoryList = async () => {
   const data = categoryList;
   return (
     <div>
-      <h1>Popular Categories</h1>
+      <h3 style={{padding:'2rem 0rem', textAlign:'center'}}>Popular Categories</h3>
       <div className={styles.categories}>
         {data?.map((item) => (
           <Link
             href={`/blog?cat=${item.toLowerCase()}`}
             className={`${styles.category} ${styles[item.toLowerCase()]}`}
+            style={{color:'#5b0f17',textAlign:'center', margin:'auto', width:'fit-content', minWidth:'200px', height:'fit-content', padding:'1rem'}}
             key={item.toLowerCase()}
           >
             {item}

@@ -26,6 +26,13 @@ h1 {
     margin: 0px;
 }
 
+h3 {
+    color: #5b0f17 !important;
+    font-weight: 500;
+    margin: 0px;
+    font-size: 1.7rem;
+}
+
 h3 span {
     color: #5b0f17 !important;
     font-weight: 600;
