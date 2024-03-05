@@ -3,6 +3,7 @@ import styles from "./blogPage.module.css";
 import { blogTitleAndDescription } from "@/utils/constant";
 import { notFound } from "next/navigation";
 import CategoryList from "@/components/categoryList/CategoryList";
+import Featured from "@/components/featured/Swappable";
 
 const BlogPage = ({ searchParams }) => {
   const page = parseInt(searchParams.page) || 1;
@@ -16,6 +17,7 @@ const BlogPage = ({ searchParams }) => {
     <div className={styles.container}>
       <title>{`${blogTitleAndDescription[cat]['title']}`}</title>
       <meta name="description" content={blogTitleAndDescription[cat]['description']} />
+      <Featured />
       <CardList page={page} category={cat} />
       <CategoryList/>
     </div>

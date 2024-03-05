@@ -1,6 +1,7 @@
 import styles from "./homepage.module.css";
 import CategoryList from "@/components/categoryList/CategoryList";
 import CardList from "@/components/cardList/CardList";
+import Featured from "@/components/featured/Swappable";
 
 export default function Home({ searchParams }) {
   const page = parseInt(searchParams.page) || 1;
@@ -12,8 +13,9 @@ export default function Home({ searchParams }) {
         name="description"
         content="Experience a fresh approach to reading and learning with Crispy Read! Our web app delivers freshly brewed artcile on finance, news, entertainment, coding and sports, in a concise, easy-to-digest format. Stay informed effortlessly with Crispy Read."
       />
-        <CardList page={page} />
-        <CategoryList/>
+      <Featured />
+      <CardList page={page} />
+      <CategoryList />
       {/* </div> */}
     </div>
   );

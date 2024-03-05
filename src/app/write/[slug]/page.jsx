@@ -26,7 +26,6 @@ const getData = async (slug) => {
     desc: data?.desc,
     title: data?.title,
     seoDescription: data?.seoDescription,
-    img: "",
     slug: data?.slug,
     ...data,
     createdAt: date?.toLocaleDateString("default", { dateStyle: "medium" }),
@@ -44,6 +43,7 @@ const EditPage = async ({ params }) => {
 };
 
 const WritePage = ({ intialData }) => {
+  const router = useRouter();
   const ReactQuill = useMemo(
     () =>
       dynamic(
@@ -108,7 +108,6 @@ const WritePage = ({ intialData }) => {
   );
 
   const [open, setOpen] = useState(false);
-  const [file, setFile] = useState(null);
   const [media, setMedia] = useState("");
   const [description, setDescription] = useState("");
   const [title, setTitle] = useState("");
@@ -140,9 +139,7 @@ const WritePage = ({ intialData }) => {
       desc: description,
       slug: slugify(title),
       title: title,
-      img: file,
       category: category,
-      featured: false,
       seoDescription,
       id: intialData.id,
     });

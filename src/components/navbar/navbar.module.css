@@ -8,6 +8,7 @@
   top: 0px;
   width: 100%;
   background-color: #60040f;
+  z-index: 1;
   /* background-color:#2463eb; */
 }
 
