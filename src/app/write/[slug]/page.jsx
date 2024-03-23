@@ -5,7 +5,6 @@ import styles from "../writePage.module.css";
 import { useState, useMemo, useEffect } from "react";
 import "react-quill/dist/quill.snow.css";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
 import dynamic from "next/dynamic";
 import axios from "axios";
 import * as React from "react";
@@ -27,7 +26,6 @@ const getData = async (slug) => {
     desc: data?.desc,
     title: data?.title,
     seoDescription: data?.seoDescription,
-    img: "",
     slug: data?.slug,
     ...data,
     createdAt: date?.toLocaleDateString("default", { dateStyle: "medium" }),
@@ -45,7 +43,6 @@ const EditPage = async ({ params }) => {
 };
 
 const WritePage = ({ intialData }) => {
-  const { status } = useSession();
   const router = useRouter();
   const ReactQuill = useMemo(
     () =>
@@ -111,7 +108,6 @@ const WritePage = ({ intialData }) => {
   );
 
   const [open, setOpen] = useState(false);
-  const [file, setFile] = useState(null);
   const [media, setMedia] = useState("");
   const [description, setDescription] = useState("");
   const [title, setTitle] = useState("");
@@ -127,11 +123,8 @@ const WritePage = ({ intialData }) => {
     setTitle(intialData.title);
     setSeoDescription(intialData.seoDescription);
     setCategory(intialData.category);
-  }, [intialData, router]);
+  }, [intialData]);
 
-  if (status === "loading") {
-    return <div className={styles.loading}>Loading...</div>;
-  }
 
   const slugify = (str) =>
     str
@@ -146,9 +139,7 @@ const WritePage = ({ intialData }) => {
       desc: description,
       slug: slugify(title),
       title: title,
-      img: file,
       category: category,
-      featured: false,
       seoDescription,
       id: intialData.id,
     });

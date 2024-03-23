@@ -1,16 +1,28 @@
-.content {
-  display: flex;
-  gap: 50px;
+.container {
+  margin: auto;
+  /* padding: 1rem; */
+  width: 65%;
 }
 
-.content p {
-  text-align: justify;
+
+.container h1 a {
+  text-decoration: none;
 }
-.content p img{
+
+.container p img{
   display: none;
 }
 
-.content ul {
-  margin-inline-start: 2rem;
-  padding-bottom: 0.5rem;
+@media screen and (max-width: 820px) {
+  .container {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .container {
+    width: 100%;
+    /* padding: 1.5rem; */
+    /* margin: auto; */
+  }
 }

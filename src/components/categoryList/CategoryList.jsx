@@ -3,41 +3,21 @@ import styles from "./categoryList.module.css";
 import Link from "next/link";
 import Image from "next/image";
 import axios from "axios";
-import { BASE_URL, noCacheHeader } from "@/utils/constant";
-
-const getData = async () => {
-  const res = await axios.get(`${BASE_URL}/api/categories`, {
-    headers: noCacheHeader,
-  });
-
-  if (res.status != 200) {
-    throw new Error("Failed");
-  }
-
-  return res.data;
-};
+import { BASE_URL, categoryList, noCacheHeader } from "@/utils/constant";
 
 const CategoryList = async () => {
-  const data = await getData();
+  const data = categoryList;
   return (
-    <div className={styles.container}>
-      <h1 className={styles.title}>Popular Categories</h1>
+    <div>
+      <h3 style={{padding:'2rem 0rem', textAlign:'center'}}>Popular Categories</h3>
       <div className={styles.categories}>
         {data?.map((item) => (
           <Link
             href={`/blog?cat=${item.toLowerCase()}`}
             className={`${styles.category} ${styles[item.toLowerCase()]}`}
+            style={{color:'#5b0f17',textAlign:'center', margin:'auto', width:'fit-content', minWidth:'200px', height:'fit-content', padding:'1rem'}}
             key={item.toLowerCase()}
           >
-            {item.img && (
-              <Image
-                src={item.img}
-                alt=""
-                width={32}
-                height={32}
-                className={styles.image}
-              />
-            )}
             {item}
           </Link>
         ))}

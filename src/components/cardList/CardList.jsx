@@ -6,6 +6,7 @@ import Card from "../card/Card";
 import axios from "axios";
 import LOGGER from "@/utils/logger";
 import { BASE_URL, noCacheHeader, POST_PER_PAGE } from "@/utils/constant";
+import CategorySelect from "./CategorySelect";
 
 const getData = async (page, category) => {
   const res = await axios.get(
@@ -21,15 +22,23 @@ const getData = async (page, category) => {
   };
 };
 
+// eslint-disable-next-line @next/next/no-async-client-component
 const CardList = async ({ page = 1, category }) => {
   const { posts, count } = await getData(page, category);
 
   const hasPrev = POST_PER_PAGE * (page - 1) > 0;
   const hasNext = POST_PER_PAGE * (page - 1) + POST_PER_PAGE < count;
-
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Recent Posts</h1>
+      <div className={styles.categorySelection}>
+        <div style={{ flexGrow: 1 }}>
+          <h1 className={styles.title}>
+            {`${category ? category : "All Recent "} Posts`}
+          </h1>
+        </div>
+        <CategorySelect selectedCategoty={category} />
+      </div>
+
       <div className={styles.posts}>
         {posts?.map((item) => (
           <Card item={item} key={item._id} />

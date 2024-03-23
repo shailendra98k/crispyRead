@@ -1,14 +1,8 @@
-.container {
-}
-
-.title {
-  margin: 50px 0px;
-}
-
 .categories {
+  margin: auto;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-around;
   gap: 20px;
 }
 
@@ -17,10 +11,12 @@
   align-items: center;
   gap: 10px;
   text-transform: capitalize;
+  text-decoration: none;
   width: 15%;
   height: 80px;
   justify-content: center;
   border-radius: 10px;
+  color: black;
 }
 
 .category.entertainment {

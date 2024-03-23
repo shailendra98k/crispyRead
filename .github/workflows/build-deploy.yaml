@@ -33,6 +33,7 @@ jobs:
           echo NEXT_PUBLIC_ACCESS_TOKEN="${{ secrets.ACCESS_TOKEN}}" >> .env
           echo NEXT_PUBLIC_GOOGLE_ANALYTICS="${{ secrets.GOOGLE_ANALYTICS}}" >> .env
           echo NEXT_PUBLIC_CLARITY="${{ secrets.CLARITY}}" >> .env
+          echo NEXT_PUBLIC_BASE_URL="${{ secrets.NEXT_PUBLIC_BASE_URL}}" >> .env
           echo BASE_URL="${{ secrets.BASE_URL}}" >> .env
 
 
@@ -73,11 +74,11 @@ jobs:
       - name: Update ECS Task Definition
         run: |
           # Using AWS CLI to update the ECS task definition with the new image tag
-          aws ecs register-task-definition --family crispyread  --container-definitions '[{"name":"crispyread","image":"shailendra98k/crispyread:latest", "memory":928, "portMappings":[{"hostPort": 80, "protocol": "tcp", "containerPort":80}] }]' --region ap-south-1
+          aws ecs register-task-definition --family crispyread  --container-definitions '[{"name":"crispyread","image":"shailendra98k/crispyread:latest", "memory":500, "portMappings":[{"hostPort": 80, "protocol": "tcp", "containerPort":80}] }]' --region ap-south-1
 
       - name: Stop ECS Task
         run: |
-          aws ecs list-tasks --cluster "CrispyRead" | jq -r ".taskArns[]" | xargs -n1 aws ecs stop-task --no-cli-pager --cluster "CrispyRead" --task
+          aws ecs list-tasks --cluster "CrispyRead" --family crispyread | jq -r ".taskArns[]" | xargs -n1 aws ecs stop-task --no-cli-pager --cluster "CrispyRead" --task
 
 
       - name: Run ECS Task

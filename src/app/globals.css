@@ -1,88 +1,68 @@
-:root {
-  --bg: white;
-  --textColor: black;
-  --softBg: #f0f0f0;
-  --softTextColor: #626262;
-}
-
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
-
+/* All tag specific default CSS to be kept here */
 body {
-  max-width: 100vw;
-  overflow-x: hidden;
+  margin: 0px;
+  padding: 0px;
+  background-color: #fbfbfb;
+  font-family: ui-sans-serif, system-ui, "Segoe UI", "Roboto", "Helvetica Neue",
+    Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+p {
+  line-height: 2rem;
+  color: #111;
+  letter-spacing: 0.5px;
+  font-size: 1rem;
+}
+
+ul li {
+  letter-spacing: 0.5px;
+  font-size: 1rem;
+  color: #111;
+}
+
+h1 {
+  color: #5b0f17;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 600;
+  margin: 0px;
+  font-size: 1.8rem;
+}
+
+h3 {
+  color: #5b0f17 !important;
+  font-weight: 500;
+  margin: 0px;
+  font-size: 1.7rem;
+}
+
+h3 span {
+  color: #5b0f17 !important;
+  font-weight: 600;
+  margin: 0px;
+  font-size: 2rem;
+}
+
+h5 a,
+h5 span {
+  text-decoration: none;
+  color: #007aa3 !important;
+  text-transform: uppercase;
+  font-size: 1.5rem;
 }
 
 a {
-  color: inherit;
   text-decoration: none;
+  color: #5b0f17;
+  font-size: 1rem;
 }
 
-.dark {
-  --bg: #0f172a;
-  --textColor: #ddd;
-  --softBg: #1f273a;
-  --softTextColor: #a6a6a6;
-}
-
-.light {
-  --bg: white;
-  --textColor: black;
-  --softBg: #f0f0f0;
-  --softTextColor: #626262;
-}
-
-.container {
-  min-height: 100vh;
-  background-color: var(--bg);
-  /* color: var(--textColor); */
-  color: #626262;
-  margin-top: 68px;
-}
-
-.wrapper {
-  max-width: 1536px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 80px;
-  padding-right: 80px;
-}
-
-@media screen and (max-width: 1536px) {
-  .wrapper {
-    max-width: 1366px;
-  }
-}
-@media screen and (max-width: 1280px) {
-  .wrapper {
-    max-width: 1024px;
-  }
-}
-@media screen and (max-width: 1024px) {
-  .wrapper {
-    max-width: 768px;
-    padding-left: 40px;
-    padding-right: 40px;
-  }
-}
-@media screen and (max-width: 768px) {
-  .wrapper {
-    max-width: 640px;
-  }
-}
 @media screen and (max-width: 640px) {
-  .wrapper {
-    max-width: 475px;
+  h1 {
+    color: #5b0f17;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    margin: 0px;
+    font-size: 1.6rem;
   }
-}
-
-.ql-container{
-  font-size: 28px !important;
-}
-
-.quill > .ql-container > .ql-editor.ql-blank::before{
-  color: #b3b3b1;
 }
