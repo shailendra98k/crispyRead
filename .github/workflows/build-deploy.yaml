@@ -74,7 +74,7 @@ jobs:
       - name: Update ECS Task Definition
         run: |
           # Using AWS CLI to update the ECS task definition with the new image tag
-          aws ecs register-task-definition --family crispyread  --container-definitions '[{"name":"crispyread","image":"shailendra98k/crispyread:latest", "memory":928, "portMappings":[{"hostPort": 80, "protocol": "tcp", "containerPort":80}] }]' --region ap-south-1
+          aws ecs register-task-definition --family crispyread  --container-definitions '[{"name":"crispyread","image":"shailendra98k/crispyread:latest", "memory":500, "portMappings":[{"hostPort": 80, "protocol": "tcp", "containerPort":80}] }]' --region ap-south-1
 
       - name: Stop ECS Task
         run: |
