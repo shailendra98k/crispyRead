@@ -5,29 +5,31 @@ import Image from "next/image";
 import Card from "../card/Card";
 import axios from "axios";
 import LOGGER from "@/utils/logger";
-import { BASE_URL, noCacheHeader, POST_PER_PAGE } from "@/utils/constant";
+import { BASE_URL, CRISPY_READ_CORE_BASE_URL, noCacheHeader, POST_PER_PAGE } from "@/utils/constant";
 import CategorySelect from "./CategorySelect";
 
 const getData = async (page, category) => {
-  const res = await axios.get(
-    `${BASE_URL}/api/posts/?page=${page}&category=${category || ""}`,
-    {
-      headers: noCacheHeader,
-    }
-  );
+  const url = category
+    ? `${CRISPY_READ_CORE_BASE_URL}/api/posts/${category}?page=${page}`
+    : `${CRISPY_READ_CORE_BASE_URL}/api/posts?page=${page}`;
+
+  const res = await axios.get(url, {
+    headers: noCacheHeader,
+  });
+  console.log('Response is: ', url);
 
   return {
-    posts: res.data.a,
-    count: res.data.b,
+    posts: res.data,
+    count: res.data.length,
   };
 };
 
 // eslint-disable-next-line @next/next/no-async-client-component
-const CardList = async ({ page = 1, category }) => {
+const CardList = async ({ page = 0, category }) => {
   const { posts, count } = await getData(page, category);
 
-  const hasPrev = POST_PER_PAGE * (page - 1) > 0;
-  const hasNext = POST_PER_PAGE * (page - 1) + POST_PER_PAGE < count;
+  const hasPrev = POST_PER_PAGE * (page) > 0;
+  const hasNext = POST_PER_PAGE * (page) + POST_PER_PAGE < count;
   return (
     <div className={styles.container}>
       <div className={styles.categorySelection}>

@@ -5,9 +5,10 @@ import { logger } from "../../../../logger";
 export const GET = async (req, { params }) => {
   try {
     logger.info(`GET api/featured-post`);
-    const post = await Post.findAll({ where: { featured: true } });
-    logger.info(`Received featured post : ${post.slug}`);
-    return new NextResponse(JSON.stringify(post, { status: 200 }));
+    const posts = await Post.findAll({ where: { featured: true } });
+
+    logger.info(`Received featured post : ${posts}`);
+    return new NextResponse(posts, { status: 200 });
   } catch (err) {
     logger.error(`Error occured while fetching post:  ${err}`);
     return new NextResponse(

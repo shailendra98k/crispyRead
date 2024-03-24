@@ -4,6 +4,7 @@ import { logger } from "../../../../logger";
 
 export const GET = async () => {
   logger.info(`GET api/categories`);
+  console.log("hi")
   try {
     const categories = categoryList;
     logger.info(`Received categories: ${categories}`);

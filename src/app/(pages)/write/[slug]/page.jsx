@@ -11,7 +11,7 @@ import * as React from "react";
 import { getCookie, noCacheHeader } from "@/utils/constant";
 
 const getData = async (slug) => {
-  const res = await axios.get(`/api/posts/${slug}`, {
+  const res = await axios.get(`/api/post/${slug}`, {
     headers: noCacheHeader,
   });
   if (res.status !== 200) {
@@ -23,12 +23,11 @@ const getData = async (slug) => {
   const date = new Date(data?.createdAt);
   return {
     _id: data?.id,
-    desc: data?.desc,
+    desc: data?.content,
     title: data?.title,
     seoDescription: data?.seoDescription,
     slug: data?.slug,
     ...data,
-    createdAt: date?.toLocaleDateString("default", { dateStyle: "medium" }),
     published: data?.published,
   };
 };
@@ -135,8 +134,9 @@ const WritePage = ({ intialData }) => {
       .replace(/^-+|-+$/g, "");
 
   const handleSubmit = async () => {
-    const res = await axios.patch("/api/posts", {
-      desc: description,
+    const res = await axios.put("/api/post", {
+      ...intialData,
+      content: description,
       slug: slugify(title),
       title: title,
       category: category,

@@ -1,6 +1,7 @@
 export const BASE_URL = process.env.BASE_URL;
 export const BASE_URL_CLIENT = process.env.NEXT_PUBLIC_BASE_URL;
-export const POST_PER_PAGE = 6;
+export const CRISPY_READ_CORE_BASE_URL = 'http://crispyread.com:8080'
+export const POST_PER_PAGE = 10;
 export const categoryList = [
   "News",
   "Entertainment",

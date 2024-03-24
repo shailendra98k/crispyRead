@@ -4,7 +4,7 @@ import CardList from "@/app/components/cardList/CardList";
 import Featured from "@/app/components/featured/Swappable";
 
 export default function Home({ searchParams }) {
-  const page = parseInt(searchParams.page) || 1;
+  const page = parseInt(searchParams.page) || 0;
 
   return (
     <div className={styles.container}>

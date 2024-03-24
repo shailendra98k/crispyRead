@@ -6,7 +6,7 @@ import CategoryList from "@/app/components/categoryList/CategoryList";
 import Featured from "@/app/components/featured/Swappable";
 
 const BlogPage = ({ searchParams }) => {
-  const page = parseInt(searchParams.page) || 1;
+  const page = parseInt(searchParams.page) || 0;
   const { cat } = searchParams;
 
   if(!blogTitleAndDescription[cat]) {
