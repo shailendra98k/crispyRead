@@ -123,7 +123,7 @@ const WritePage = ({ intialData }) => {
     setTitle(intialData.title);
     setSeoDescription(intialData.seoDescription);
     setCategory(intialData.category);
-  }, [intialData]);
+  }, [intialData, router]);
 
 
   const slugify = (str) =>
