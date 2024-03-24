@@ -11,23 +11,8 @@ const getData = async (slug) => {
     throw new Error("Failed");
   }
 
-  const data = res.data;
-
-  const date = new Date(data?.createdAt);
-  return {
-    _id: data?.id,
-    desc: data?.content,
-    title: data?.title,
-    seoDescription: data?.seoDescription,
-    img: "",
-    slug: data?.slug,
-    ...data,
-    createdAt: date?.toLocaleDateString("default", { dateStyle: "medium" }),
-    published: data?.published,
-  };
+  return res.data;
 };
-
-
 
 // eslint-disable-next-line @next/next/no-async-client-component
 const SinglePage = async ({ params }) => {

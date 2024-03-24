@@ -95,11 +95,11 @@ const WritePage = () => {
       .replace(/^-+|-+$/g, "");
 
   const handleSubmit = async () => {
-    const res = await axios.post("/api/posts", {
-      desc: description,
+    const res = await axios.post("/api/post", {
+      content: description,
       slug: slugify(title),
       title: title,
-      img: file,
+      coverImage: file,
       category: category,
       featured: false,
     });

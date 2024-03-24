@@ -12,7 +12,8 @@ export const Comp = ({ data, slug }) => {
   const [isStaff, setIsStaff] = useState(0);
 
   const setVisibility = async () => {
-    const res = await axios.patch(`/api/posts/${slug}`, {
+    const res = await axios.put(`/api/post`, {
+      ...data,
       published: !isPublished,
     });
     setIspublished(res.data.published);
@@ -51,8 +52,10 @@ export const Comp = ({ data, slug }) => {
       </button>
       <button className={styles.categoryBadge}>{data.category}</button>
       <h1>{data?.title}</h1>
-      <span style={{ color: "gray", fontSize: "14px" }}>{data?.createdAt}</span>
-      <div dangerouslySetInnerHTML={{ __html: data?.desc }} />
+      <span style={{ color: "gray", fontSize: "14px" }}>
+        {new Date(data.createdAt).toUTCString()}
+      </span>
+      <div dangerouslySetInnerHTML={{ __html: data?.content }} />
     </div>
   );
 };
