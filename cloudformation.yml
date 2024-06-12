@@ -1,0 +1,28 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: CloudFormation stack to create an ECS cluster and IAM role with policies.
+
+Resources:
+  ECSCluster:
+    Type: AWS::ECS::Cluster
+    Properties:
+      ClusterName: CrispyRead
+
+  IAMUser:  
+    Type: AWS::IAM::User
+    Properties:
+      UserName: adminUser
+
+  IAMUserPolicy:
+    Type: AWS::IAM::UserPolicy
+    Properties:
+      PolicyName: root
+      UserName: !Ref IAMUser
+      PolicyDocument: 
+        Version: 2012-10-17
+        Statement:
+          Effect: Allow
+          Action: '*'
+          Resource: '*'
+      
+
+
