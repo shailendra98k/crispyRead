@@ -1,6 +1,5 @@
 "use client";
 import * as React from "react";
-import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MobileStepper from "@mui/material/MobileStepper";
 import Paper from "@mui/material/Paper";
@@ -15,36 +14,7 @@ import { BASE_URL_CLIENT, noCacheHeader } from "@/utils/constant";
 import Link from "next/link";
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
-const getData = async () => {
-  const res = await axios.get(`${BASE_URL_CLIENT}/api/featured-posts`, {
-    headers: noCacheHeader,
-  });
-
-  if (res.status !== 200) {
-    throw new Error("Failed");
-  }
-  return res.data;
-};
-
-const SwipeableTextMobileStepper = () => {
-  const [images, setImages] = React.useState([]);
-
-  React.useEffect(() => {
-    getData().then((res) => {
-      const temp = [];
-      for (const i in res) {
-        const post = res[i];
-        temp.push({ label: post.title, imgPath: post.img, slug: post.slug });
-      }
-      setImages(temp);
-    });
-  }, []);
-
-  return SwipeableTextMobileStepperHelper(images);
-};
-
-function SwipeableTextMobileStepperHelper(images) {
-  const theme = useTheme();
+export const SwipeableTextMobileStepperHelper = ({images}) => {
   const [activeStep, setActiveStep] = React.useState(0);
   const maxSteps = images.length;
 
@@ -72,7 +42,7 @@ function SwipeableTextMobileStepperHelper(images) {
       }}
     >
       <AutoPlaySwipeableViews
-        axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+        axis={"x"}
         index={activeStep}
         onChangeIndex={handleStepChange}
         enableMouseEvents
@@ -91,8 +61,8 @@ function SwipeableTextMobileStepperHelper(images) {
                     height: "230px",
                     maxWidth: "500px",
                   }}
-                  src={step.imgPath}
-                  alt={step.label}
+                  src={step.coverImage}
+                  alt={step.title}
                 />
               </Link>
             ) : null}
@@ -110,12 +80,13 @@ function SwipeableTextMobileStepperHelper(images) {
           bgcolor: "background.default",
           textAlign: "center",
           padding: "1rem 0rem",
-          textTransform:'none',
-          
+          textTransform: "none",
         }}
       >
         <Link href={`${BASE_URL_CLIENT}/posts/${images[activeStep]?.slug}`}>
-          <Typography style={{fontSize:'1.3rem'}}>{images[activeStep]?.label}</Typography>
+          <Typography style={{ fontSize: "1.3rem" }}>
+            {images[activeStep]?.title}
+          </Typography>
         </Link>
       </Paper>
       <MobileStepper
@@ -129,26 +100,16 @@ function SwipeableTextMobileStepperHelper(images) {
             disabled={activeStep === maxSteps - 1}
           >
             Next
-            {theme.direction === "rtl" ? (
-              <KeyboardArrowLeft />
-            ) : (
-              <KeyboardArrowRight />
-            )}
+            <KeyboardArrowRight />
           </Button>
         }
         backButton={
           <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-            {theme.direction === "rtl" ? (
-              <KeyboardArrowRight />
-            ) : (
-              <KeyboardArrowLeft />
-            )}
+            <KeyboardArrowLeft />
             Back
           </Button>
         }
       />
     </Box>
   );
-}
-
-export default SwipeableTextMobileStepper;
+};

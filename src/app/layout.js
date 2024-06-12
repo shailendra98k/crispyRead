@@ -1,6 +1,6 @@
-import Navbar from "@/components/navbar/Navbar";
+import Navbar from "@/app/components/navbar/Navbar";
 import "./globals.css";
-import Footer from "@/components/footer/Footer";
+import Footer from "@/app/components/footer/Footer";
 import Script from "next/script";
 
 export default function RootLayout({ children }) {

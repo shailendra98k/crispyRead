@@ -2,41 +2,18 @@
 import styles from "./singlePage.module.css";
 import Image from "next/image";
 import axios from "axios";
-import { noCacheHeader } from "@/utils/constant";
+import { CRISPY_READ_CORE_BASE_URL, noCacheHeader } from "@/utils/constant";
 import * as React from "react";
 import { useState } from "react";
 import { getCookie } from "@/utils/constant";
 
-const getData = async (slug) => {
-  const res = await axios.get(`/api/posts/${slug}`, {
-    headers: noCacheHeader,
-  });
-  if (res.status !== 200) {
-    throw new Error("Failed");
-  }
-
-  const data = res.data;
-
-  const date = new Date(data?.createdAt);
-  return {
-    _id: data?.id,
-    desc: data?.desc,
-    title: data?.title,
-    seoDescription: data?.seoDescription,
-    img: "",
-    slug: data?.slug,
-    ...data,
-    createdAt: date?.toLocaleDateString("default", { dateStyle: "medium" }),
-    published: data?.published,
-  };
-};
-
-const Comp = ({ data, slug }) => {
+export const Comp = ({ data, slug }) => {
   const [isPublished, setIspublished] = React.useState(0);
   const [isStaff, setIsStaff] = useState(0);
 
   const setVisibility = async () => {
-    const res = await axios.patch(`/api/posts/${slug}`, {
+    const res = await axios.put(`/api/post`, {
+      ...data,
       published: !isPublished,
     });
     setIspublished(res.data.published);
@@ -75,25 +52,10 @@ const Comp = ({ data, slug }) => {
       </button>
       <button className={styles.categoryBadge}>{data.category}</button>
       <h1>{data?.title}</h1>
-      <span style={{ color: "gray", fontSize: "14px" }}>{data?.createdAt}</span>
-      <div dangerouslySetInnerHTML={{ __html: data?.desc }} />
+      <span style={{ color: "gray", fontSize: "14px" }}>
+        {new Date(data.createdAt).toUTCString()}
+      </span>
+      <div dangerouslySetInnerHTML={{ __html: data?.content }} />
     </div>
   );
 };
-
-// eslint-disable-next-line @next/next/no-async-client-component
-const SinglePage = async ({ params }) => {
-  const { slug } = params;
-
-  const data = await getData(slug);
-  return (
-    <div className={styles.container}>
-      <div className={styles.content}>
-        <Comp data={data} slug={slug} />
-      </div>
-      <div className={styles.aside}></div>
-    </div>
-  );
-};
-
-export default SinglePage;

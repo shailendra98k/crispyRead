@@ -11,7 +11,7 @@ const Card = ({ key, item }) => {
       style={{ backgroundColor: "white", padding: "1rem" }}
     >
       <Link href={`/posts/${item.slug}`}>
-        <img className={styles.image} src={item.img} alt="" width={"100%"} height={100} />
+        <img className={styles.image} src={item.coverImage} alt="" width={"100%"} height={100} />
         <h3>{item.title}</h3>
         <span className={styles.date}>
           {date.toLocaleString("default", { dateStyle: "medium" })}
@@ -23,14 +23,14 @@ const Card = ({ key, item }) => {
               src="https://img.icons8.com/forma-thin/24/open-book.png"
               alt="open-book"
             />
-            {` ${Math.round(item?.desc?.length/1000)} min read`}
+            {` ${Math.round(item?.content?.length/1000)} min read`}
           </span>
         </span>
 
         <div
           className={styles.postDescription}
           dangerouslySetInnerHTML={{
-            __html: `${item?.desc.substring(0, 120)}...`,
+            __html: `${item?.content.substring(0, 120)}...`,
           }}
         />
       </Link>
