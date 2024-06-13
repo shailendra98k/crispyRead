@@ -80,6 +80,16 @@ jobs:
         run: |
           aws ecs list-tasks --cluster "CrispyRead" --family crispyread | jq -r ".taskArns[]" | xargs -n1 aws ecs stop-task --no-cli-pager --cluster "CrispyRead" --task
 
+        run: |
+        # List running tasks for the specified cluster and service
+        TASK_ARN=$(aws ecs list-tasks --cluster "CrispyRead" --desired-status RUNNING --query 'taskArns[0]' --output text)
+        # Check if a task is running
+        if [ "$TASK_ARN" != "None" ]; then
+            echo "Stopping ECS task: $TASK_ARN"
+            aws ecs stop-task --cluster "CrispyRead" --task $TASK_ARN
+        else
+            echo "No running tasks found in cluster CrispyRead."
+        fi
 
       - name: Run ECS Task
         run: |
