@@ -49,6 +49,13 @@ Resources:
       #   Namespace: fakeDropbox
       # Tags: []
   
+  SSHKeyPair:
+    Type: AWS::EC2::KeyPair
+    Properties:
+      KeyName: crispyread-ssh
+      KeyFormat: pem
+      KeyType: rsa
+      
   EC2LaunchTemplate:
     Type: AWS::EC2::LaunchTemplate
     DependsOn: ECSCluster
@@ -60,7 +67,7 @@ Resources:
             DeviceIndex: 0
             DeleteOnTermination: true
             Groups: !Ref SecurityGroupIds # security group associated with the ec2-instance
-        KeyName: ecs # key-pair name to ssh into ec2-instance
+        KeyName: crispyread-ssh # key-pair name to ssh into ec2-instance
         IamInstanceProfile:
           Arn: !Ref IamRoleInstanceProfile
         UserData: !Base64
