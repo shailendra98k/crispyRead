@@ -6,9 +6,9 @@ Parameters:
     Description: Specifies the ECS Cluster Name with which the resources would be associated
     Default: CrispyRead
   SecurityGroupIds:
-    Type: CommaDelimitedList
+    Type: 'List<AWS::EC2::SecurityGroup::Id>'
     Description: Optional - Specifies the Comma separated list of the Security Group Id of an existing Security Group.
-    Default: 'sg-064136c133f8923e7'
+  
   # VpcId:
   #   Type: String
   #   Description: Optional - Specifies the ID of an existing VPC in which to launch your container instances. If you specify a VPC ID, you must specify a list of existing subnets in that VPC. If you do not specify a VPC ID, a new VPC is created with at least 1 subnet.
