@@ -7,7 +7,7 @@ import "react-quill/dist/quill.snow.css";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import axios from "axios";
-import { getCookie } from "@/utils/constant";
+import { CRISPY_READ_CORE_BASE_URL, getCookie } from "@/utils/constant";
 const WritePage = () => {
   const router = useRouter();
   const ReactQuill = useMemo(
@@ -80,9 +80,6 @@ const WritePage = () => {
   const [category, setCategory] = useState("news");
 
   useEffect(() => {
-    if (getCookie("auth") != process.env.NEXT_PUBLIC_ACCESS_TOKEN) {
-      router.push("/");
-    }
   }, [router]);
 
 

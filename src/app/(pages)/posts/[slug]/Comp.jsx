@@ -23,10 +23,7 @@ export const Comp = ({ data, slug }) => {
     }
   };
   React.useEffect(() => {
-    if (getCookie("auth") === process.env.NEXT_PUBLIC_ACCESS_TOKEN) {
-      setIsStaff(1);
-    }
-    setIspublished(data.published);
+      setIspublished(data.published);
     const ele = document.createElement("div");
     ele.innerHTML = data.socialMediaLink1;
     document

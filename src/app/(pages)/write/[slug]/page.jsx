@@ -115,9 +115,6 @@ const WritePage = ({ intialData }) => {
   const quillRef = React.useRef(null);
 
   useEffect(() => {
-    if (getCookie("auth") != process.env.NEXT_PUBLIC_ACCESS_TOKEN) {
-      router.push("/");
-    }
     setDescription(intialData.desc);
     setTitle(intialData.title);
     setSeoDescription(intialData.seoDescription);
