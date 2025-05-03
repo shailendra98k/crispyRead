@@ -1,4 +1,4 @@
-const CRISPY_READ_CORE_BASE_URL = "http://crispyread.com:8080"
+const CRISPY_READ_CORE_BASE_URL = "http://localhost:8080"
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images:{

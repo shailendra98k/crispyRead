@@ -16,7 +16,6 @@ export default function Home({ searchParams }) {
       <Featured />
       <CardList page={page} />
       <CategoryList />
-      {/* </div> */}
     </div>
   );
 }
