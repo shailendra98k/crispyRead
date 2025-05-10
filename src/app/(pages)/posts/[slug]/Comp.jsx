@@ -1,8 +1,5 @@
-"use client";
+
 import styles from "./singlePage.module.css";
-import Image from "next/image";
-import axios from "axios";
-import { CRISPY_READ_CORE_BASE_URL, noCacheHeader } from "@/utils/constant";
 import * as React from "react";
 import { useState } from "react";
 import { getCookie } from "@/utils/constant";
@@ -10,18 +7,6 @@ import { getCookie } from "@/utils/constant";
 export const Comp = ({ data, slug }) => {
   const [isPublished, setIspublished] = React.useState(0);
   const [isStaff, setIsStaff] = useState(0);
-
-  const setVisibility = async () => {
-    const res = await axios.put(`/api/post`, {
-      ...data,
-      published: !isPublished,
-    });
-    setIspublished(res.data.published);
-
-    if (res.status !== 200) {
-      throw new Error("Failed");
-    }
-  };
   React.useEffect(() => {
     if (getCookie("auth") === process.env.NEXT_PUBLIC_ACCESS_TOKEN) {
       setIsStaff(1);
@@ -46,7 +31,7 @@ export const Comp = ({ data, slug }) => {
           background: isPublished ? "#5f050f" : "green",
         }}
         className={styles.publish}
-        onClick={setVisibility}
+        onClick={() => {}}
       >
         {isPublished ? "Archive" : "Publish"}
       </button>

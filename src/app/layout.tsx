@@ -2,6 +2,8 @@ import Navbar from "@/app/components/navbar/Navbar";
 import "./globals.css";
 import Footer from "@/app/components/footer/Footer";
 import Script from "next/script";
+import React from "react";
+import { AppContextProvider } from "./providers/AppContextProvider";
 
 export default function RootLayout({ children }) {
   return (
@@ -30,12 +32,15 @@ export default function RootLayout({ children }) {
         })(window, document, "clarity", "script", "${process.env.NEXT_PUBLIC_CLARITY}");
         `}
       </Script>
+
       <body>
-        <Navbar />
-        <div className="container">
-          <div className="wrapper">{children}</div>
-        </div>
-        <Footer />
+        <AppContextProvider>
+          <Navbar />
+          <div className="container">
+            <div className="wrapper">{children}</div>
+          </div>
+          <Footer />
+        </AppContextProvider>
       </body>
     </html>
   );

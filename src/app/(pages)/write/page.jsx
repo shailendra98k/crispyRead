@@ -14,7 +14,7 @@ const WritePage = () => {
     () =>
       dynamic(
         async () => {
-          const { default: RQ } = await import("react-quill");
+          const { default: RQ } = import("react-quill");
 
           // eslint-disable-next-line react/display-name
           return ({ forwardedRef, ...props }) => (
@@ -94,8 +94,8 @@ const WritePage = () => {
       .replace(/[\s_-]+/g, "-")
       .replace(/^-+|-+$/g, "");
 
-  const handleSubmit = async () => {
-    const res = await axios.post("/api/post", {
+  const handleSubmit =  () => {
+    const res =  axios.post("/api/post", {
       content: description,
       slug: slugify(title),
       title: title,

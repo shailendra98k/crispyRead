@@ -1,5 +1,4 @@
 "use client";
-
 import Image from "next/image";
 import styles from "../writePage.module.css";
 import { useState, useMemo, useEffect } from "react";
@@ -10,8 +9,8 @@ import axios from "axios";
 import * as React from "react";
 import { getCookie, noCacheHeader } from "@/utils/constant";
 
-const getData = async (slug) => {
-  const res = await axios.get(`/api/post/${slug}`, {
+const getData =  (slug) => {
+  const res =  axios.get(`/api/post/${slug}`, {
     headers: noCacheHeader,
   });
   if (res.status !== 200) {
@@ -33,10 +32,10 @@ const getData = async (slug) => {
 };
 
 // eslint-disable-next-line @next/next/no-async-client-component
-const EditPage = async ({ params }) => {
+const EditPage =  ({ params }) => {
   const { slug } = params;
 
-  const data = await getData(slug);
+  const data =  getData(slug);
 
   return <WritePage intialData={data} />;
 };
@@ -47,7 +46,7 @@ const WritePage = ({ intialData }) => {
     () =>
       dynamic(
         async () => {
-          const { default: RQ } = await import("react-quill");
+          const { default: RQ } =  import("react-quill");
 
           // eslint-disable-next-line react/display-name
           return ({ forwardedRef, ...props }) => (
@@ -133,8 +132,8 @@ const WritePage = ({ intialData }) => {
       .replace(/[\s_-]+/g, "-")
       .replace(/^-+|-+$/g, "");
 
-  const handleSubmit = async () => {
-    const res = await axios.put("/api/post", {
+  const handleSubmit =  () => {
+    const res =  axios.put("/api/post", {
       ...intialData,
       content: description,
       slug: slugify(title),
