@@ -36,7 +36,7 @@ const BlogsPage = ({ params }) => {
         name="description"
         content={blogTitleAndDescription[category]["description"]}
       />
-      <Featured />
+      <Featured featured={posts}  />
       <CardList posts={posts} page={page} category={category} />
       <CategoryList />
     </div>
