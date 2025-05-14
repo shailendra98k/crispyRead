@@ -1,5 +1,6 @@
 "use client";
 import CrispyReadClient from "@/app/client/CrispyReadClient";
+import { useAppContext } from "@/app/providers/AppContextProvider";
 import { AppProvider } from "@toolpad/core/AppProvider";
 import { SignInPage, type AuthProvider } from "@toolpad/core/SignInPage";
 import React from "react";
@@ -15,7 +16,8 @@ export default function App() {
     })
       .then((response: any) => {
         if (response.active) {
-           window.location.replace("/");
+          window.localStorage.setItem("user", JSON.stringify(response));
+          window.location.replace("/");
         } else {
           console.error("Login failed");
           // Handle login failure here

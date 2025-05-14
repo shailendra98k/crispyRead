@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import styles from "../../writePage.module.css";
 import { useState, useMemo, useEffect } from "react";
 import "react-quill/dist/quill.snow.css";
@@ -8,47 +7,18 @@ import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import axios from "axios";
 import * as React from "react";
-import { getCookie, noCacheHeader } from "@/utils/constant";
+import { noCacheHeader } from "@/utils/constant";
 import { useAppContext } from "@/app/providers/AppContextProvider";
 import { Loader } from "@/app/components/loader";
 import CrispyReadClient from "@/app/client/CrispyReadClient";
 
-const getData = async (slug) => {
-  const res = await axios.get(`/api/post/${slug}`, {
-    headers: noCacheHeader,
-  });
-  if (res.status !== 200) {
-    throw new Error("Failed");
-  }
 
-  const data = res.data;
-
-  const date = new Date(data?.createdAt);
-  return {
-    _id: data?.id,
-    desc: data?.content,
-    title: data?.title,
-    seoDescription: data?.seoDescription,
-    slug: data?.slug,
-    ...data,
-    published: data?.published,
-  };
-};
-
-// eslint-disable-next-line @next/next/no-async-client-component
-const EditPage = async ({ params }) => {
+const EditPage = ({ params }) => {
+  const [initialData, setInitialData] = useState(null);
   const { slug, id } = params;
-
-  const data = await CrispyReadClient.getPostById(id, slug);
-  console.log(data);
-
-  return <WritePage intialData={data} />;
-};
-
-const WritePage = ({ intialData }) => {
   const { user } = useAppContext();
 
-  if (user === null) {
+  if (!user) {
     return <Loader />;
   }
 
@@ -57,6 +27,19 @@ const WritePage = ({ intialData }) => {
     return;
   }
 
+  const fetchPost = async () => {
+    const data = await CrispyReadClient.getPostById(id, slug);
+    setInitialData(data);
+  };
+
+  React.useEffect(() => {
+    fetchPost();
+  }, [user]);
+
+  return <WritePage intialData={initialData} />;
+};
+
+const WritePage = ({ intialData }) => {
   const router = useRouter();
   const ReactQuill = useMemo(
     () =>
@@ -64,7 +47,6 @@ const WritePage = ({ intialData }) => {
         async () => {
           const { default: RQ } = await import("react-quill");
 
-          // eslint-disable-next-line react/display-name
           return ({ forwardedRef, ...props }) => (
             <RQ ref={forwardedRef} {...props} />
           );
@@ -130,10 +112,10 @@ const WritePage = ({ intialData }) => {
   const quillRef = React.useRef(null);
 
   useEffect(() => {
-    setDescription(intialData.desc);
-    setTitle(intialData.title);
-    setSeoDescription(intialData.seoDescription);
-    setCategory(intialData.category);
+    setDescription(intialData?.content);
+    setTitle(intialData?.title);
+    setSeoDescription(intialData?.seoDescription);
+    setCategory(intialData?.category?.name);
   }, [intialData, router]);
 
   const slugify = (str) =>

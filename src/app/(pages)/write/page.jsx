@@ -8,14 +8,14 @@ import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import axios from "axios";
 import { getCookie } from "@/utils/constant";
-import { useAppContext } from "@/app/providers/AppContextProvider";
+import { useAppContext, UserType } from "@/app/providers/AppContextProvider";
 import { Loader } from "@/app/components/loader";
 const WritePage = () => {
   const router = useRouter();
 
   const { user } = useAppContext();
 
-  if (user === null) {
+  if (!user) {
     return <Loader />;
   }
 

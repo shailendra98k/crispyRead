@@ -10,7 +10,7 @@ import { headers, publicRuntimeConfig } from "../../../next.config";
 import { CRISPY_READ_CORE_BASE_URL, getCookie } from "@/utils/constant";
 import CrispyReadClient from "../client/CrispyReadClient";
 
-enum UserType {
+export enum UserType {
   LOGGED_IN = "loggedIn",
   GUEST = "guest",
 }
@@ -23,6 +23,7 @@ export interface Category {
   name: string;
 }
 export interface UserDetails {
+  id?: number;
   type: UserType;
   firstName?: string;
   lastName?: string;
@@ -44,7 +45,11 @@ export const AppContextProvider: React.FC<AppContextProviderProps> = ({
   children,
 }) => {
   const [categories, setCategories] = useState<Category[]>([]);
-  const [user, setUser] = useState<UserDetails>(null);
+  const [user, setUser] = useState<UserDetails>(
+    window.localStorage.getItem("user")
+      ? JSON.parse(window.localStorage.getItem("user") as string)
+      : { type: UserType.GUEST }
+  );
 
   React.useEffect(() => {
     const fetchUserInfo = async () => {
@@ -55,7 +60,7 @@ export const AppContextProvider: React.FC<AppContextProviderProps> = ({
       setCategories(await CrispyReadClient.fetchCategories());
     };
 
-    fetchUserInfo();
+    user?.id && fetchUserInfo();
     fetchCategories();
   }, []);
 
