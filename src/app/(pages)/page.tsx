@@ -2,9 +2,9 @@
 import styles from "./homepage.module.css";
 import CardList from "@/app/components/cardList/CardList";
 import CategoryList from "@/app/components/categoryList/CategoryList";
-import Featured from "@/app/components/featured/Swappable";
 import React from "react";
 import CrispyReadClient from "../client/CrispyReadClient";
+import { Featured } from "../components/featured/Featured";
 
 export default function Home({ searchParams }) {
   const page = parseInt(searchParams.page) || 0;
@@ -31,7 +31,7 @@ export default function Home({ searchParams }) {
         content="Experience a fresh approach to reading and learning with Crispy Read! Our web app delivers freshly brewed artcile on finance, news, entertainment, coding and sports, in a concise, easy-to-digest format. Stay informed effortlessly with Crispy Read."
       />
 
-      <Featured featured={posts} />
+      <Featured posts={posts} />
       <CardList posts={posts} page={page} category={""} />
       <CategoryList />
     </div>

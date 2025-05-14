@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 
 class CrispyReadClient {
-  private static bearerToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc0Njk1OTMyNSwiZXhwIjoxNzQ2OTk1MzI1fQ.Yp7HHBDIAWsvtvJK4cJ7WD_1Kd7GMUdJpBPTzx-3CHw";
+  private static bearerToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc0NzI0MzgzMCwiZXhwIjoxNzQ3Mjc5ODMwfQ.TzgaOX16F5U8eghuSpty0OzBdZMQxhwotQZxENN-ADM";
   private static axiosInstance: AxiosInstance = axios.create({
     baseURL: "http://localhost/api",
     headers: {

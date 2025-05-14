@@ -2,10 +2,10 @@
 import { blogTitleAndDescription } from "@/utils/constant";
 import React from "react";
 import CategoryList from "@/app/components/categoryList/CategoryList";
-import Featured from "@/app/components/featured/Swappable";
 import CardList from "@/app/components/cardList/CardList";
 import styles from "./page.module.css";
 import CrispyReadClient from "@/app/client/CrispyReadClient";
+import { Featured } from "@/app/components/featured/Featured";
 
 const BlogsPage = ({ params }) => {
   const { slug: category, searchParams } = params;
@@ -36,7 +36,7 @@ const BlogsPage = ({ params }) => {
         name="description"
         content={blogTitleAndDescription[category]["description"]}
       />
-      <Featured featured={posts}  />
+      <Featured posts={posts}  />
       <CardList posts={posts} page={page} category={category} />
       <CategoryList />
     </div>

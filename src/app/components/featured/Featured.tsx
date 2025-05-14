@@ -11,11 +11,13 @@ import SwipeableViews from "react-swipeable-views";
 import { autoPlay } from "react-swipeable-views-utils";
 import { BASE_URL_CLIENT } from "@/utils/constant";
 import Link from "next/link";
-const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
+const AutoPlaySwipeableViews = autoPlay(
+  SwipeableViews
+) as React.ComponentType<any>;
 
-export const SwipeableTextMobileStepperHelper = ({ images }) => {
+export const Featured = ({ posts }) => {
   const [currentIndex, setCurrentIndex] = React.useState(0);
-  const maxSteps = images.length;
+  const maxSteps = posts.length;
 
   const handleNext = () => {
     setCurrentIndex((prevIndex) => prevIndex + 1);
@@ -46,10 +48,10 @@ export const SwipeableTextMobileStepperHelper = ({ images }) => {
         onChangeIndex={handleChangeIndex}
         enableMouseEvents
       >
-        {images?.map((step, index) => (
-          <div key={step.label}>
+        {posts?.map((post: any, index: number) => (
+          <div key={post.label}>
             {Math.abs(currentIndex - index) <= 2 ? (
-              <Link href={`${BASE_URL_CLIENT}/posts/${step.slug}`}>
+              <Link href={`/posts/${post.id}/${post.slug}`}>
                 <Box
                   component="img"
                   sx={{
@@ -60,8 +62,8 @@ export const SwipeableTextMobileStepperHelper = ({ images }) => {
                     height: "230px",
                     maxWidth: "500px",
                   }}
-                  src={step.coverImage}
-                  alt={step.title}
+                  src={post.coverImage}
+                  alt={post.title}
                 />
               </Link>
             ) : null}
@@ -82,9 +84,9 @@ export const SwipeableTextMobileStepperHelper = ({ images }) => {
           textTransform: "none",
         }}
       >
-        <Link href={`${BASE_URL_CLIENT}/posts/${images[currentIndex]?.slug}`}>
+        <Link href={`${BASE_URL_CLIENT}/posts/${posts[currentIndex]?.slug}`}>
           <Typography style={{ fontSize: "1.3rem" }}>
-            {images[currentIndex]?.title}
+            {posts[currentIndex]?.title}
           </Typography>
         </Link>
       </Paper>
@@ -103,7 +105,11 @@ export const SwipeableTextMobileStepperHelper = ({ images }) => {
           </Button>
         }
         backButton={
-          <Button size="small" onClick={handleBack} disabled={currentIndex === 0}>
+          <Button
+            size="small"
+            onClick={handleBack}
+            disabled={currentIndex === 0}
+          >
             <KeyboardArrowLeft />
             Back
           </Button>

@@ -1,6 +1,6 @@
 export const BASE_URL = process.env.BASE_URL;
-export const BASE_URL_CLIENT = 'http://localhost:8080'
-export const CRISPY_READ_CORE_BASE_URL = 'http://localhost:8080'
+export const BASE_URL_CLIENT = 'http://localhost'
+export const CRISPY_READ_CORE_BASE_URL = 'http://localhost'
 export const POST_PER_PAGE = 10;
 export const categoryList = [
   "News",
