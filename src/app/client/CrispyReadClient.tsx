@@ -1,7 +1,6 @@
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 
 class CrispyReadClient {
-  private static bearerToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc0NzI0MzgzMCwiZXhwIjoxNzQ3Mjc5ODMwfQ.TzgaOX16F5U8eghuSpty0OzBdZMQxhwotQZxENN-ADM";
   private static axiosInstance: AxiosInstance = axios.create({
     baseURL: "http://localhost/api",
     headers: {
@@ -9,11 +8,32 @@ class CrispyReadClient {
     },
   });
 
+  public static async login<T>({
+    username,
+    password,
+  }: {
+    username: string;
+    password: string;
+  }): Promise<T> {
+    try {
+      const response: AxiosResponse<T> = await this.axiosInstance.post(
+        "/user/login",
+        {
+          username,
+          password,
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      throw error;
+    }
+  }
+
   public static async fetchCategories<T>(): Promise<T> {
     try {
-      const response: AxiosResponse<T> = await this.axiosInstance.get(
-        "/categories"
-      );
+      const response: AxiosResponse<T> =
+        await this.axiosInstance.get("/categories");
       return response.data;
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -23,11 +43,7 @@ class CrispyReadClient {
 
   public static async fetchUserInfo<T>(): Promise<T> {
     try {
-      const response: AxiosResponse<T> = await this.axiosInstance.get("/user", {
-        headers: {
-          Authorization: `Bearer ${this.bearerToken}`,
-        },
-      });
+      const response: AxiosResponse<T> = await this.axiosInstance.get("/user");
       return response.data;
     } catch (error) {
       console.error("Error fetching data:", error);
