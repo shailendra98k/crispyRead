@@ -1,6 +1,7 @@
 "use client";
+
 import Image from "next/image";
-import styles from "../writePage.module.css";
+import styles from "../../writePage.module.css";
 import { useState, useMemo, useEffect } from "react";
 import "react-quill/dist/quill.snow.css";
 import { useRouter } from "next/navigation";
@@ -8,9 +9,12 @@ import dynamic from "next/dynamic";
 import axios from "axios";
 import * as React from "react";
 import { getCookie, noCacheHeader } from "@/utils/constant";
+import { useAppContext } from "@/app/providers/AppContextProvider";
+import { Loader } from "@/app/components/loader";
+import CrispyReadClient from "@/app/client/CrispyReadClient";
 
-const getData =  (slug) => {
-  const res =  axios.get(`/api/post/${slug}`, {
+const getData = async (slug) => {
+  const res = await axios.get(`/api/post/${slug}`, {
     headers: noCacheHeader,
   });
   if (res.status !== 200) {
@@ -32,21 +36,33 @@ const getData =  (slug) => {
 };
 
 // eslint-disable-next-line @next/next/no-async-client-component
-const EditPage =  ({ params }) => {
-  const { slug } = params;
+const EditPage = async ({ params }) => {
+  const { slug, id } = params;
 
-  const data =  getData(slug);
+  const data = await CrispyReadClient.getPostById(id, slug);
+  console.log(data);
 
   return <WritePage intialData={data} />;
 };
 
 const WritePage = ({ intialData }) => {
+  const { user } = useAppContext();
+
+  if (user === null) {
+    return <Loader />;
+  }
+
+  if (user.role !== "ADMIN") {
+    window.location.href = "/";
+    return;
+  }
+
   const router = useRouter();
   const ReactQuill = useMemo(
     () =>
       dynamic(
         async () => {
-          const { default: RQ } =  import("react-quill");
+          const { default: RQ } = await import("react-quill");
 
           // eslint-disable-next-line react/display-name
           return ({ forwardedRef, ...props }) => (
@@ -114,15 +130,11 @@ const WritePage = ({ intialData }) => {
   const quillRef = React.useRef(null);
 
   useEffect(() => {
-    if (getCookie("auth") != process.env.NEXT_PUBLIC_ACCESS_TOKEN) {
-      router.push("/");
-    }
     setDescription(intialData.desc);
     setTitle(intialData.title);
     setSeoDescription(intialData.seoDescription);
     setCategory(intialData.category);
   }, [intialData, router]);
-
 
   const slugify = (str) =>
     str
@@ -132,8 +144,8 @@ const WritePage = ({ intialData }) => {
       .replace(/[\s_-]+/g, "-")
       .replace(/^-+|-+$/g, "");
 
-  const handleSubmit =  () => {
-    const res =  axios.put("/api/post", {
+  const handleSubmit = async () => {
+    const res = await axios.put("/api/post", {
       ...intialData,
       content: description,
       slug: slugify(title),

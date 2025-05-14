@@ -62,6 +62,18 @@ class CrispyReadClient {
       throw error;
     }
   }
+  
+  public static async getPostById<T>(id: number, slug: string): Promise<T> {
+    try {
+      const response: AxiosResponse<T> = await this.axiosInstance.get(
+        `/post/${id}/${slug}`
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      throw error;
+    }
+  }
 }
 
 export default CrispyReadClient;

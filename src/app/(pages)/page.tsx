@@ -5,6 +5,7 @@ import CategoryList from "@/app/components/categoryList/CategoryList";
 import React from "react";
 import CrispyReadClient from "../client/CrispyReadClient";
 import { Featured } from "../components/featured/Featured";
+import { useAppContext } from "../providers/AppContextProvider";
 
 export default function Home({ searchParams }) {
   const page = parseInt(searchParams.page) || 0;

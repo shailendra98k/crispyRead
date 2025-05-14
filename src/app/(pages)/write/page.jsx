@@ -2,19 +2,33 @@
 
 import Image from "next/image";
 import styles from "./writePage.module.css";
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, use } from "react";
 import "react-quill/dist/quill.snow.css";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import axios from "axios";
 import { getCookie } from "@/utils/constant";
+import { useAppContext } from "@/app/providers/AppContextProvider";
+import { Loader } from "@/app/components/loader";
 const WritePage = () => {
   const router = useRouter();
+
+  const { user } = useAppContext();
+
+  if (user === null) {
+    return <Loader />;
+  }
+
+  if (user.role !== "ADMIN") {
+    window.location.href = "/";
+    return;
+  }
+
   const ReactQuill = useMemo(
     () =>
       dynamic(
         async () => {
-          const { default: RQ } = import("react-quill");
+          const { default: RQ } = await import("react-quill");
 
           // eslint-disable-next-line react/display-name
           return ({ forwardedRef, ...props }) => (
@@ -79,13 +93,6 @@ const WritePage = () => {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("news");
 
-  useEffect(() => {
-    if (getCookie("auth") != process.env.NEXT_PUBLIC_ACCESS_TOKEN) {
-      router.push("/");
-    }
-  }, [router]);
-
-
   const slugify = (str) =>
     str
       .toLowerCase()
@@ -94,8 +101,8 @@ const WritePage = () => {
       .replace(/[\s_-]+/g, "-")
       .replace(/^-+|-+$/g, "");
 
-  const handleSubmit =  () => {
-    const res =  axios.post("/api/post", {
+  const handleSubmit = async () => {
+    const res = await axios.post("/api/post", {
       content: description,
       slug: slugify(title),
       title: title,
