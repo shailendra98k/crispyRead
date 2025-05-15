@@ -51,7 +51,7 @@ export const Featured = ({ posts }) => {
         {posts?.map((post: any, index: number) => (
           <div key={post.label}>
             {Math.abs(currentIndex - index) <= 2 ? (
-              <Link href={`/posts/${post.id}/${post.slug}`}>
+              <Link href={`/post/${post.id}/${post.slug}`}>
                 <Box
                   component="img"
                   sx={{
