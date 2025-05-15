@@ -3,13 +3,10 @@ import React from "react";
 import styles from "./categorySelect.module.css";
 import { useAppContext } from "@/app/providers/AppContextProvider";
 
-const CategorySelect = ({category}) => {
-  const categories = [
-    { name: "All Categories" },
-    ...useAppContext().categories,
-  ];
-  const [selectedCategory, setSelectedCategory] =
-    React.useState(category || "all categories");
+const CategorySelect = ({ category = "news", showAllCategory = true }) => {
+  const { categories } = useAppContext();
+
+  const [selectedCategory, setSelectedCategory] = React.useState(category);
   return (
     <div className={styles.container}>
       <select
@@ -24,6 +21,10 @@ const CategorySelect = ({category}) => {
           window.location.href = "/blogs/" + e.target.value;
         }}
       >
+        {showAllCategory && (
+          <option value="all categories">ALL CATEGORIES</option>
+        )}
+
         {categories?.map((category) => {
           return (
             <option

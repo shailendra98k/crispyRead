@@ -53,14 +53,20 @@ export const AppContextProvider: React.FC<AppContextProviderProps> = ({
 
   React.useEffect(() => {
     const fetchUserInfo = async () => {
-      setUser(await CrispyReadClient.fetchUserInfo());
+      try {
+        setUser(await CrispyReadClient.fetchUserInfo());
+      }
+      catch (error) {
+        window.localStorage.removeItem("user");
+        console.error("Error fetching user info:", error);
+      }
     };
 
     const fetchCategories = async () => {
       setCategories(await CrispyReadClient.fetchCategories());
     };
 
-    user?.id && fetchUserInfo();
+    fetchUserInfo();
     fetchCategories();
   }, []);
 

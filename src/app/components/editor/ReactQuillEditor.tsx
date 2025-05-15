@@ -1,39 +1,20 @@
-"use client";
-
-import Image from "next/image";
-import styles from "./writePage.module.css";
-import { useState, useMemo, useEffect, use } from "react";
-import "react-quill/dist/quill.snow.css";
-import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
-import axios from "axios";
-import { getCookie } from "@/utils/constant";
-import { useAppContext, UserType } from "@/app/providers/AppContextProvider";
-import { Loader } from "@/app/components/loader";
-const WritePage = () => {
-  const router = useRouter();
+import styles from "./editor.module.css";
+import { useState, useMemo, useEffect } from "react";
+import "react-quill/dist/quill.snow.css";
+import * as React from "react";
+import CategorySelect from "@/app/components/cardList/CategorySelect";
 
-  const { user } = useAppContext();
-
-  if (!user) {
-    return <Loader />;
-  }
-
-  if (user.role !== "ADMIN") {
-    window.location.href = "/";
-    return;
-  }
-
+export const ReactQuillEditor = ({ intialData = undefined } ) => {
   const ReactQuill = useMemo(
     () =>
       dynamic(
         async () => {
           const { default: RQ } = await import("react-quill");
 
-          // eslint-disable-next-line react/display-name
-          return ({ forwardedRef, ...props }) => (
-            <RQ ref={forwardedRef} {...props} />
-          );
+          return (
+            props: { forwardedRef: React.Ref<any> } & Record<string, any>
+          ) => <RQ ref={props.forwardedRef} {...props} />;
         },
         {
           ssr: false,
@@ -41,6 +22,7 @@ const WritePage = () => {
       ),
     []
   );
+
   const ImageHandler = (quill, value, callback) => {
     const range = quill.getSelection(true);
     const img = `<img src="${value}" alt="External Image"/>`;
@@ -87,33 +69,22 @@ const WritePage = () => {
   );
 
   const [open, setOpen] = useState(false);
-  const [file, setFile] = useState(null);
   const [media, setMedia] = useState("");
   const [description, setDescription] = useState("");
   const [title, setTitle] = useState("");
+  const [seoDescription, setSeoDescription] = useState("");
   const [category, setCategory] = useState("news");
+  const quillRef = React.useRef(null);
 
-  const slugify = (str) =>
-    str
-      .toLowerCase()
-      .trim()
-      .replace(/[^\w\s-]/g, "")
-      .replace(/[\s_-]+/g, "-")
-      .replace(/^-+|-+$/g, "");
+  useEffect(() => {
+    setDescription(intialData?.content);
+    setTitle(intialData?.title);
+    setSeoDescription(intialData?.seoDescription);
+    setCategory(intialData?.category?.name);
+  }, [intialData]);
+
 
   const handleSubmit = async () => {
-    const res = await axios.post("/api/post", {
-      content: description,
-      slug: slugify(title),
-      title: title,
-      coverImage: file,
-      category: category,
-      featured: false,
-    });
-
-    if (res.status === 200) {
-      router.push(`/posts/${res.data["slug"]}`);
-    }
   };
 
   return (
@@ -125,26 +96,16 @@ const WritePage = () => {
             type="text"
             placeholder="Title"
             className={styles.input}
+            value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
         </div>
-        <div>
-          <select
-            required
-            style={{ width: 200, padding: "16px", margin: "4px 0px" }}
-            onChange={(value) => setCategory(value.target.value)}
-          >
-            <option value="news">News</option>
-            <option value="entertainment">Entertainment</option>
-            <option value="coding">Coding</option>
-            <option value="sports">Sports</option>
-            <option value="automobile">Automobile</option>
-            <option value="finance">Finance</option>
-          </select>
-        </div>
 
-        <div className={styles.editor}>
+        <CategorySelect showAllCategory={false} />
+
+        <div className={styles.editor} ref={quillRef}>
           <ReactQuill
+            forwardedRef={quillRef}
             className={styles.textArea}
             theme="snow"
             value={description}
@@ -155,17 +116,19 @@ const WritePage = () => {
         </div>
         <div>
           <textarea
+            value={seoDescription}
+            onChange={(e) => {
+              setSeoDescription(e?.target?.value);
+            }}
             required
             style={{ margin: "60px 0px", height: "100px", width: "100%" }}
             placeholder="Seo Description"
           />
         </div>
         <button type="button" className={styles.publish} onClick={handleSubmit}>
-          Save
+          Update
         </button>
       </form>
     </div>
   );
 };
-
-export default WritePage;
