@@ -6,6 +6,7 @@ import React from "react";
 import CrispyReadClient from "../client/CrispyReadClient";
 import { Featured } from "../components/featured/Featured";
 import { useAppContext } from "../providers/AppContextProvider";
+import { Loader } from "../components/loader";
 
 export default function Home({ searchParams }) {
   const page = parseInt(searchParams.page) || 0;
@@ -24,6 +25,10 @@ export default function Home({ searchParams }) {
     fetchPosts();
   }, []);
 
+
+  if(posts.length === 0) {
+    return <Loader />
+  }
   return (
     <div className={styles.container}>
       <title>Crispy Read - Where content meets clarity</title>
