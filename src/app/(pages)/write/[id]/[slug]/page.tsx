@@ -15,7 +15,7 @@ const EditPage = ({ params }) => {
   const onSubmitHandler = async (data) => {
     const response: any = await CrispyReadClient.updatePost(data);
     if (response) {
-      window.location.href = `/posts/${response?.id}/${response?.slug}`;
+      window.location.href = `/post/${response?.id}/${response?.slug}`;
     }
   };
 

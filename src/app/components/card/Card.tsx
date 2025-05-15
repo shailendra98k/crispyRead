@@ -9,7 +9,7 @@ const Card = ({ key, item }) => {
       className={styles.container}
       style={{ backgroundColor: "white", padding: "1rem" }}
     >
-      <Link href={`/posts/${item.slug}`}>
+      <Link href={`/post/${item.id}/${item.slug}`}>
         <img
           className={styles.image}
           

@@ -12,7 +12,7 @@ const WritePage = () => {
   const onSubmitHandler = async (data) => {
     const response: any = await CrispyReadClient.createPost(data);
     if (response) {
-      window.location.href = `/posts/${response?.id}/${response?.slug}`;
+      window.location.href = `/post/${response?.id}/${response?.slug}`;
     }
   };
 
