@@ -5,7 +5,10 @@ import "react-quill/dist/quill.snow.css";
 import * as React from "react";
 import CategorySelect from "@/app/components/cardList/CategorySelect";
 
-export const ReactQuillEditor = ({ intialData = undefined } ) => {
+export const ReactQuillEditor = ({
+  intialData = undefined,
+  submitHandler = ({}) => {},
+}) => {
   const ReactQuill = useMemo(
     () =>
       dynamic(
@@ -68,8 +71,6 @@ export const ReactQuillEditor = ({ intialData = undefined } ) => {
     []
   );
 
-  const [open, setOpen] = useState(false);
-  const [media, setMedia] = useState("");
   const [description, setDescription] = useState("");
   const [title, setTitle] = useState("");
   const [seoDescription, setSeoDescription] = useState("");
@@ -77,14 +78,23 @@ export const ReactQuillEditor = ({ intialData = undefined } ) => {
   const quillRef = React.useRef(null);
 
   useEffect(() => {
-    setDescription(intialData?.content);
-    setTitle(intialData?.title);
-    setSeoDescription(intialData?.seoDescription);
-    setCategory(intialData?.category?.name);
+    if (intialData) {
+      setDescription(intialData.content);
+      setTitle(intialData.title);
+      setSeoDescription(intialData.seoDescription);
+      setCategory(intialData.category.name);
+    }
   }, [intialData]);
 
-
   const handleSubmit = async () => {
+    submitHandler({
+      id: intialData.id,
+      slug: intialData.slug,
+      title,
+      content: description,
+      seoDescription,
+      category: category,
+    });
   };
 
   return (
@@ -101,7 +111,11 @@ export const ReactQuillEditor = ({ intialData = undefined } ) => {
           />
         </div>
 
-        <CategorySelect showAllCategory={false} />
+        <CategorySelect
+          category={category}
+          showAllCategory={false}
+          redirection={false}
+        />
 
         <div className={styles.editor} ref={quillRef}>
           <ReactQuill
@@ -126,7 +140,7 @@ export const ReactQuillEditor = ({ intialData = undefined } ) => {
           />
         </div>
         <button type="button" className={styles.publish} onClick={handleSubmit}>
-          Update
+          {intialData ? "Update" : "Publish"}
         </button>
       </form>
     </div>

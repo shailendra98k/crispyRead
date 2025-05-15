@@ -12,6 +12,13 @@ const EditPage = ({ params }) => {
   const { slug, id } = params;
   const { user } = useAppContext();
 
+  const onSubmitHandler = async (data) => {
+    const response: any = await CrispyReadClient.updatePost(data);
+    if (response) {
+      window.location.href = `/posts/${response?.id}/${response?.slug}`;
+    }
+  };
+
   if (!user) {
     return <Loader />;
   }
@@ -30,7 +37,7 @@ const EditPage = ({ params }) => {
     fetchPost();
   }, [user]);
 
-  return <ReactQuillEditor intialData={initialData} />;
+  return <ReactQuillEditor intialData={initialData} submitHandler={onSubmitHandler} />;
 };
 
 export default EditPage;

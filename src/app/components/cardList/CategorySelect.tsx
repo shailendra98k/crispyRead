@@ -3,7 +3,11 @@ import React from "react";
 import styles from "./categorySelect.module.css";
 import { useAppContext } from "@/app/providers/AppContextProvider";
 
-const CategorySelect = ({ category = "news", showAllCategory = true }) => {
+const CategorySelect = ({
+  category = "news",
+  showAllCategory = true,
+  redirection = true,
+}) => {
   const { categories } = useAppContext();
 
   const [selectedCategory, setSelectedCategory] = React.useState(category);
@@ -14,6 +18,8 @@ const CategorySelect = ({ category = "news", showAllCategory = true }) => {
         className={styles.selectInput}
         onChange={(e) => {
           setSelectedCategory(e.target.value);
+
+          if (!redirection) return;
           if (e.target.value === "all categories") {
             window.location.href = "/";
             return;
