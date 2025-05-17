@@ -14,7 +14,7 @@ export const ReactQuillEditor = ({
       dynamic(
         async () => {
           const { default: RQ } = await import("react-quill");
-
+          /* eslint-disable react/display-name */
           return (
             props: { forwardedRef: React.Ref<any> } & Record<string, any>
           ) => <RQ ref={props.forwardedRef} {...props} />;

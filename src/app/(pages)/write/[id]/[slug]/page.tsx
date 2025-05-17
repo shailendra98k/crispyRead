@@ -19,6 +19,14 @@ const EditPage = ({ params }) => {
     }
   };
 
+  React.useEffect(() => {
+    const fetchPost = async () => {
+      const data = await CrispyReadClient.getPostById(id, slug);
+      setInitialData(data);
+    };
+    fetchPost();
+  }, [user]);
+
   if (!user) {
     return <Loader />;
   }
@@ -28,16 +36,12 @@ const EditPage = ({ params }) => {
     return;
   }
 
-  const fetchPost = async () => {
-    const data = await CrispyReadClient.getPostById(id, slug);
-    setInitialData(data);
-  };
-
-  React.useEffect(() => {
-    fetchPost();
-  }, [user]);
-
-  return <ReactQuillEditor intialData={initialData} submitHandler={onSubmitHandler} />;
+  return (
+    <ReactQuillEditor
+      intialData={initialData}
+      submitHandler={onSubmitHandler}
+    />
+  );
 };
 
 export default EditPage;

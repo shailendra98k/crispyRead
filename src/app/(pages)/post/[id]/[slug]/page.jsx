@@ -16,7 +16,7 @@ const PostReadOnlyView = ({ params }) => {
 
   useEffect(() => {
     fetchPost();
-  }, [slug, id]);
+  }, [slug, id, fetchPost]);
 
   if (post === null) {
     return <Loader />;
