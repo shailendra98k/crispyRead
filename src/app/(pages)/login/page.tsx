@@ -1,44 +1,78 @@
+"use client";
 import CrispyReadClient from "@/app/client/CrispyReadClient";
-import { useAppContext } from "@/app/providers/AppContextProvider";
-import { AppProvider } from "@toolpad/core/AppProvider";
-import { SignInPage, type AuthProvider } from "@toolpad/core/SignInPage";
+import { Box, Button, TextField, Typography, Grid, Paper } from "@mui/material";
 import React from "react";
-export const dynamic = "force-dynamic";
+import { useState } from "react";
 
-let window: any = { location: { href: "" } , localStorage: { setItem: () => {} } };
-export default function App() {
-  const signIn: (provider: AuthProvider, formData: FormData) => void = async (
-    provider,
-    formData
-  ) => {
-    CrispyReadClient.login({
-      username: formData.get("email") as string,
-      password: formData.get("password") as string,
-    })
+const SignInPage = () => {
+  const [formData, setFormData] = useState({ username: "", password: "" });
+  const signIn = () => {
+    CrispyReadClient.login(formData)
       .then((response: any) => {
-        if (response.active) {
+        if (response.active && typeof window !== "undefined") {
           window.localStorage.setItem("user", JSON.stringify(response));
           window.location.replace("/");
         } else {
           console.error("Login failed");
-          // Handle login failure here
         }
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
-        // Handle error here
       });
   };
 
-  const providers = [{ id: "credentials", name: "Email and Password" }];
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    signIn();
+  };
+
   return (
-    <SignInPage
-      signIn={signIn}
-      providers={providers}
-      slotProps={{
-        emailField: { autoFocus: false },
-        form: { noValidate: true },
-      }}
-    />
+    <Grid
+      container
+      justifyContent="center"
+      alignItems="center"
+      style={{ minHeight: "100vh" }}
+    >
+      <Grid item xs={12} sm={8} md={4}>
+        <Paper elevation={3} style={{ padding: "2rem" }}>
+          <Typography variant="h5" component="h1" gutterBottom>
+            Sign In
+          </Typography>
+          <form onSubmit={handleSubmit}>
+            <Box mb={2}>
+              <TextField
+                fullWidth
+                placeholder="Username"
+                name="username"
+                value={formData.username}
+                onChange={handleInputChange}
+                required
+              />
+            </Box>
+            <Box mb={2}>
+              <TextField
+                fullWidth
+                placeholder="Password"
+                name="password"
+                type="password"
+                value={formData.password}
+                onChange={handleInputChange}
+                required
+              />
+            </Box>
+            <Button type="submit" variant="contained" color="primary" fullWidth>
+              Sign In
+            </Button>
+          </form>
+        </Paper>
+      </Grid>
+    </Grid>
   );
-}
+};
+
+export default SignInPage;
