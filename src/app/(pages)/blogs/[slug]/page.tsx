@@ -41,8 +41,6 @@ const BlogsPage = ({ params, searchParams }) => {
 
     fetchPosts();
     fetchfeaturedPosts();
-
-    fetchPosts();
   }, [page, category]);
 
 
