@@ -51,10 +51,27 @@ class CrispyReadClient {
     }
   }
 
-  public static async getPostsByCategory<T>(category: string): Promise<T> {
+  public static async getPosts<T>(page: number, size: number): Promise<T> {
     try {
       const response: AxiosResponse<T> = await this.axiosInstance.get(
-        `/posts/${category}`
+        `/posts?page=${page}&size=${size}`
+      );
+      console.log("response000", response);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      throw error;
+    }
+  }
+
+  public static async getPostsByCategory<T>(
+    category: string,
+    page: number,
+    size: number
+  ): Promise<T> {
+    try {
+      const response: AxiosResponse<T> = await this.axiosInstance.get(
+        `/posts/${category}?page=${page}&size=${size}`
       );
       return response.data;
     } catch (error) {

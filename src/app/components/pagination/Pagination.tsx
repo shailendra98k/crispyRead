@@ -7,6 +7,8 @@ import { useRouter } from "next/navigation";
 const Pagination = ({ page, hasPrev, hasNext }) => {
   const router = useRouter();
 
+  console.log("page", page);
+
   return (
     <div className={styles.container}>
       <button

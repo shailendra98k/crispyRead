@@ -5,29 +5,33 @@ import CategoryList from "@/app/components/categoryList/CategoryList";
 import React from "react";
 import CrispyReadClient from "../client/CrispyReadClient";
 import { Featured } from "../components/featured/Featured";
-import { useAppContext } from "../providers/AppContextProvider";
 import { Loader } from "../components/loader";
+import { POST_PER_PAGE_HOME_PAGE } from "@/utils/constant";
 
 export default function Home({ searchParams }) {
   const page = parseInt(searchParams.page) || 0;
   const [posts, setPosts] = React.useState<any>([]);
+  const [totalCount, setTotalCount] = React.useState<number>(0);
 
   React.useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const fetchedPosts = await CrispyReadClient.getPostsByCategory("");
-        setPosts(fetchedPosts);
+        const response: any = await CrispyReadClient.getPosts(
+          page,
+          POST_PER_PAGE_HOME_PAGE
+        );
+        setPosts(response.posts);
+        setTotalCount(response.totalPublishedPosts);
       } catch (error) {
         console.error("Error fetching posts:", error);
       }
     };
 
     fetchPosts();
-  }, []);
+  }, [page]);
 
-
-  if(posts.length === 0) {
-    return <Loader />
+  if (posts.length === 0) {
+    return <Loader />;
   }
   return (
     <div className={styles.container}>
@@ -38,7 +42,12 @@ export default function Home({ searchParams }) {
       />
 
       <Featured posts={posts} />
-      <CardList posts={posts} page={page} category={""} />
+      <CardList
+        totalCount={totalCount}
+        posts={posts}
+        page={page}
+        category={""}
+      />
       <CategoryList />
     </div>
   );
