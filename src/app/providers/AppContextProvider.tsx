@@ -40,14 +40,14 @@ export interface AppContextProviderProps {
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
-
+let window: any;
 export const AppContextProvider: React.FC<AppContextProviderProps> = ({
   children,
 }) => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [user, setUser] = useState<UserDetails>(
-    window.localStorage.getItem("user")
-      ? JSON.parse(window.localStorage.getItem("user") as string)
+    window?.localStorage.getItem("user")
+      ? JSON.parse(window?.localStorage.getItem("user") as string)
       : { type: UserType.GUEST }
   );
 
@@ -57,7 +57,7 @@ export const AppContextProvider: React.FC<AppContextProviderProps> = ({
         setUser(await CrispyReadClient.fetchUserInfo());
       }
       catch (error) {
-        window.localStorage.removeItem("user");
+        window?.localStorage.removeItem("user");
         console.error("Error fetching user info:", error);
       }
     };

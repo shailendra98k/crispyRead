@@ -5,9 +5,9 @@ import { Loader } from "@/app/components/loader";
 import { ReactQuillEditor } from "@/app/components/editor/ReactQuillEditor";
 import React from "react";
 import CrispyReadClient from "@/app/client/CrispyReadClient";
+let window: any = { location: { href: "" } };
 const WritePage = () => {
   const { user } = useAppContext();
-
 
   const onSubmitHandler = async (data) => {
     const response: any = await CrispyReadClient.createPost(data);
