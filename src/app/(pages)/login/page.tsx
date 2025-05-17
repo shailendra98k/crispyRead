@@ -1,10 +1,11 @@
-"use client";
 import CrispyReadClient from "@/app/client/CrispyReadClient";
 import { useAppContext } from "@/app/providers/AppContextProvider";
 import { AppProvider } from "@toolpad/core/AppProvider";
 import { SignInPage, type AuthProvider } from "@toolpad/core/SignInPage";
 import React from "react";
+export const dynamic = "force-dynamic";
 
+let window: any = { location: { href: "" } , localStorage: { setItem: () => {} } };
 export default function App() {
   const signIn: (provider: AuthProvider, formData: FormData) => void = async (
     provider,
