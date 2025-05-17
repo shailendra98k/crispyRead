@@ -22,7 +22,7 @@ const Navbar = () => {
           </span>
         </Link>
       </div>
-      <div className={styles.links}>
+      <div style={{display:'none'}} className={styles.links}>
         <Link
           href="/about"
           className={styles.link}

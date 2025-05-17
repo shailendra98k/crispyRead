@@ -6,12 +6,14 @@ import CardList from "@/app/components/cardList/CardList";
 import styles from "./page.module.css";
 import CrispyReadClient from "@/app/client/CrispyReadClient";
 import { Featured } from "@/app/components/featured/Featured";
+import { Loader } from "@/app/components/loader";
 
 const BlogsPage = ({ params, searchParams }) => {
   const { slug: category } = params;
   const page = parseInt(searchParams?.page) || 0;
 
   const [posts, setPosts] = React.useState<any>([]);
+  const [featuredPosts, setFeaturedPosts] = React.useState<any>([]);
   const [totalCount, setTotalCount] = React.useState<number>(0);
 
   React.useEffect(() => {
@@ -28,11 +30,25 @@ const BlogsPage = ({ params, searchParams }) => {
         console.error("Error fetching posts:", error);
       }
     };
+    const fetchfeaturedPosts = async () => {
+      try {
+        const posts: any = await CrispyReadClient.getFeaturedPosts();
+        setFeaturedPosts(posts);
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
+    };
+
+    fetchPosts();
+    fetchfeaturedPosts();
 
     fetchPosts();
   }, [page, category]);
 
-  console.log("searchParams: ", searchParams);
+
+  if (posts.length === 0 || featuredPosts.length === 0) {
+    return <Loader />;
+  }
 
   return (
     <div className={styles.container}>
@@ -41,7 +57,7 @@ const BlogsPage = ({ params, searchParams }) => {
         name="description"
         content={blogTitleAndDescription[category]["description"]}
       />
-      <Featured posts={posts} />
+      <Featured posts={featuredPosts} />
       <CardList
         totalCount={totalCount}
         posts={posts}

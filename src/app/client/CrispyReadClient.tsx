@@ -25,7 +25,7 @@ class CrispyReadClient {
       );
       return response.data;
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error while logging in:", error);
       throw error;
     }
   }
@@ -36,7 +36,7 @@ class CrispyReadClient {
         await this.axiosInstance.get("/categories");
       return response.data;
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error fetching categories:", error);
       throw error;
     }
   }
@@ -46,7 +46,7 @@ class CrispyReadClient {
       const response: AxiosResponse<T> = await this.axiosInstance.get("/user");
       return response.data;
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error fetching userInfo:", error);
       throw error;
     }
   }
@@ -59,7 +59,7 @@ class CrispyReadClient {
       console.log("response000", response);
       return response.data;
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error fetching posts:", error);
       throw error;
     }
   }
@@ -75,7 +75,18 @@ class CrispyReadClient {
       );
       return response.data;
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error fetching posts by category:", error);
+      throw error;
+    }
+  }
+
+  public static async getFeaturedPosts<T>(): Promise<T> {
+    try {
+      const response: AxiosResponse<T> =
+        await this.axiosInstance.get(`/posts/featured`);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching featured data:", error);
       throw error;
     }
   }
@@ -87,7 +98,7 @@ class CrispyReadClient {
       );
       return response.data;
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error fetching post by id:", error);
       throw error;
     }
   }
@@ -100,7 +111,7 @@ class CrispyReadClient {
       );
       return response.data;
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error while creating a post:", error);
       throw error;
     }
   }
@@ -113,7 +124,7 @@ class CrispyReadClient {
       );
       return response.data;
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error while updating a post:", error);
       throw error;
     }
   }
