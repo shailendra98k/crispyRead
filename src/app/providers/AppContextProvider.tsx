@@ -1,13 +1,5 @@
 "use client";
-import React, {
-  createContext,
-  useState,
-  ReactNode,
-  useEffect,
-  useContext,
-} from "react";
-import { headers, publicRuntimeConfig } from "../../../next.config";
-import { CRISPY_READ_CORE_BASE_URL, getCookie } from "@/utils/constant";
+import React, { createContext, useState, ReactNode, useContext } from "react";
 import CrispyReadClient from "../client/CrispyReadClient";
 
 export enum UserType {

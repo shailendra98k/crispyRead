@@ -10,13 +10,12 @@ const PostReadOnlyView = ({ params }) => {
   const { user } = useAppContext();
   const [post, setPost] = useState(null);
 
-  const fetchPost = async () => {
-    setPost(await CrispyReadClient.getPostById(id, slug));
-  };
-
   useEffect(() => {
+    const fetchPost = async () => {
+      setPost(await CrispyReadClient.getPostById(id, slug));
+    };
     fetchPost();
-  }, [slug, id, fetchPost]);
+  }, [slug, id]);
 
   if (post === null) {
     return <Loader />;

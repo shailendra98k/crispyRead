@@ -43,8 +43,7 @@ const BlogsPage = ({ params, searchParams }) => {
     fetchfeaturedPosts();
   }, [page, category]);
 
-
-  if (posts.length === 0 || featuredPosts.length === 0) {
+  if (featuredPosts.length === 0) {
     return <Loader />;
   }
 
