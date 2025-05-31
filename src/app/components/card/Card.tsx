@@ -1,20 +1,28 @@
 /* eslint-disable @next/next/no-img-element */
-import Image from "next/image";
 import styles from "./card.module.css";
 import Link from "next/link";
+import React from "react";
 
 const Card = ({ key, item }) => {
-  const date = new Date(item.createdAt);
   return (
     <div
       className={styles.container}
       style={{ backgroundColor: "white", padding: "1rem" }}
     >
-      <Link href={`/posts/${item.slug}`}>
-        <img className={styles.image} src={item.coverImage} alt="" width={"100%"} height={100} />
+      <Link href={`/post/${item.id}/${item.slug}`}>
+        <img
+          className={styles.image}
+          
+          alt=""
+          width={"100%"}
+          height={100}
+        />
         <h3>{item.title}</h3>
         <span className={styles.date}>
-          {date.toLocaleString("default", { dateStyle: "medium" })}
+          {new Date(item.createdAt).toLocaleDateString("default", {
+            dateStyle: "medium",
+          })}
+
           <span style={{ position: "relative", left: "1rem" }}>
             <img
               width="16"
@@ -23,14 +31,14 @@ const Card = ({ key, item }) => {
               src="https://img.icons8.com/forma-thin/24/open-book.png"
               alt="open-book"
             />
-            {` ${Math.round(item?.content?.length/1000)} min read`}
+            {` ${Math.round(item?.content?.length / 1000)} min read`}
           </span>
         </span>
 
         <div
           className={styles.postDescription}
           dangerouslySetInnerHTML={{
-            __html: `${item?.content.substring(0, 120)}...`,
+            __html: `${item?.content?.substring(0, 120) || <span></span>}...`,
           }}
         />
       </Link>
