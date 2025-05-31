@@ -1,21 +1,20 @@
-const CRISPY_READ_CORE_BASE_URL = "http://localhost:8080"
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  images:{
-    domains:["d2cg59g0calthe.cloudfront.net"]
+  images: {
+    domains: ["d2cg59g0calthe.cloudfront.net"],
   },
   publicRuntimeConfig: {
-	crispyReadServiceUrl: process.env.crispyReadServiceUrl
+    crispyReadServiceUrl: process.env.crispyReadServiceUrl,
   },
-  output: 'standalone',
+  output: "standalone",
   async rewrites() {
-		return [
-			{
-				source: '/api/:path*',
-				destination: `${CRISPY_READ_CORE_BASE_URL}/api/:path*`,
-			},
-		]
-	},
-}
+    return [
+      {
+        source: "/api/:path*",
+        destination: `${process.env.CRISPY_READ_CORE_BASE_URL}/api/:path*`,
+      },
+    ];
+  },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

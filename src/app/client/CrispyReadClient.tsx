@@ -2,7 +2,7 @@ import axios, { AxiosInstance, AxiosResponse } from "axios";
 
 class CrispyReadClient {
   private static axiosInstance: AxiosInstance = axios.create({
-    baseURL: "http://localhost/api",
+    baseURL: "/api",
     headers: {
       "Content-Type": "application/json",
     },
