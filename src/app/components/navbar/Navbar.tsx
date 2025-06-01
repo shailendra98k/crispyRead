@@ -4,12 +4,11 @@ import styles from "./navbar.module.css";
 import Image from "next/image";
 import Link from "next/link";
 import AuthLinks from "../authLinks/AuthLinks";
-import { useAppContext } from "@/app/providers/AppContextProvider";
+import { useAppContext, UserType } from "@/app/providers/AppContextProvider";
 import { Loader } from "../loader";
 
 const Navbar = () => {
   const { user } = useAppContext();
-  useEffect(() => {}, [user]);
   if (!user) {
     return <Loader />;
   }
@@ -46,11 +45,11 @@ const Navbar = () => {
           Contact
         </Link>
         <Link
-          href={user.id ? "/write" : "/login"}
+          href={user.type === UserType.LOGGED_IN ? "/write" : "/login"}
           className={styles.link}
           style={{ color: "#9e7658" }}
         >
-          {user.id ? "Write a post" : "Login"}
+          {user.type === UserType.LOGGED_IN ? "Write a post" : "Login"}
         </Link>
         <AuthLinks />
       </div>
