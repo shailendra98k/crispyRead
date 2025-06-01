@@ -13,7 +13,10 @@ const EditPage = ({ params }) => {
   const { user } = useAppContext();
 
   const onSubmitHandler = async (data) => {
-    const response: any = await CrispyReadClient.updatePost(data);
+    const response: any = await CrispyReadClient.updatePost({
+      ...initialData,
+      ...data,
+    });
     if (response) {
       window.location.href = `/post/${response?.id}/${response?.slug}`;
     }
@@ -22,6 +25,7 @@ const EditPage = ({ params }) => {
   React.useEffect(() => {
     const fetchPost = async () => {
       const data = await CrispyReadClient.getPostById(id, slug);
+      console.log("Fetched post data:", data);
       setInitialData(data);
     };
     fetchPost();

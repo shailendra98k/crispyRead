@@ -5,19 +5,18 @@ import { useAppContext } from "@/app/providers/AppContextProvider";
 
 const CategorySelect = ({
   category = "news",
+  setCategory = (value: string) => {},
   showAllCategory = true,
   redirection = true,
 }) => {
   const { categories } = useAppContext();
-
-  const [selectedCategory, setSelectedCategory] = React.useState(category);
   return (
     <div className={styles.container}>
       <select
-        value={selectedCategory}
+        value={category}
         className={styles.selectInput}
         onChange={(e) => {
-          setSelectedCategory(e.target.value);
+          setCategory(e.target.value);
 
           if (!redirection) return;
           if (e.target.value === "all categories") {

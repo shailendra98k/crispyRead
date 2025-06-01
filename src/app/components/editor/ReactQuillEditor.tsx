@@ -88,6 +88,7 @@ export const ReactQuillEditor = ({
 
   const handleSubmit = async () => {
     submitHandler({
+      ...intialData,
       id: intialData.id,
       slug: intialData.slug,
       title,
@@ -113,6 +114,7 @@ export const ReactQuillEditor = ({
 
         <CategorySelect
           category={category}
+          setCategory={setCategory}
           showAllCategory={false}
           redirection={false}
         />

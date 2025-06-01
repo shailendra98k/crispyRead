@@ -12,7 +12,7 @@ const Card = ({ key, item }) => {
       <Link href={`/post/${item.id}/${item.slug}`}>
         <img
           className={styles.image}
-          
+          src={item?.coverImage ?? "https://picsum.photos/200/300"}
           alt=""
           width={"100%"}
           height={100}
