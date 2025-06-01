@@ -30,6 +30,37 @@ class CrispyReadClient {
     }
   }
 
+  public static async signUp<T>({
+    firstName,
+    lastName,
+    email,
+    username,
+    password,
+  }: {
+    username: string;
+    password: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+  }): Promise<T> {
+    try {
+      const response: AxiosResponse<T> = await this.axiosInstance.post(
+        "/user/sign-up",
+        {
+          firstName,
+          lastName,
+          email,
+          username,
+          password,
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error while logging in:", error);
+      throw error;
+    }
+  }
+
   public static async fetchCategories<T>(): Promise<T> {
     try {
       const response: AxiosResponse<T> =
@@ -125,6 +156,32 @@ class CrispyReadClient {
       return response.data;
     } catch (error) {
       console.error("Error while updating a post:", error);
+      throw error;
+    }
+  }
+
+  public static async publishPosts<T>(postIds: number[]): Promise<T> {
+    try {
+      const response: AxiosResponse<T> = await this.axiosInstance.post(
+        `/posts/publish`,
+        postIds
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error while publishing posts:", error);
+      throw error;
+    }
+  }
+
+  public static async archivePosts<T>(postIds: number[]): Promise<T> {
+    try {
+      const response: AxiosResponse<T> = await this.axiosInstance.post(
+        `/posts/hide`,
+        postIds
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error while archiving posts:", error);
       throw error;
     }
   }

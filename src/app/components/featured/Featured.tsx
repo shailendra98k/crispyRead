@@ -84,7 +84,7 @@ export const Featured = ({ posts }) => {
           textTransform: "none",
         }}
       >
-        <Link href={`/posts/${posts[currentIndex]?.slug}`}>
+        <Link href={`/post/${posts[currentIndex]?.id}/${posts[currentIndex]?.slug}`}>
           <Typography style={{ fontSize: "1.3rem" }}>
             {posts[currentIndex]?.title}
           </Typography>

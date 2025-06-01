@@ -11,6 +11,7 @@ const EditPage = ({ params }) => {
   const [initialData, setInitialData] = useState(null);
   const { slug, id } = params;
   const { user } = useAppContext();
+  console.log("EditPage user:", user);
 
   const onSubmitHandler = async (data) => {
     const response: any = await CrispyReadClient.updatePost({
@@ -29,13 +30,18 @@ const EditPage = ({ params }) => {
       setInitialData(data);
     };
     fetchPost();
-  }, [user]);
+  }, [id, slug]);
 
-  if (!user) {
+  if (!user || !initialData) {
     return <Loader />;
   }
 
-  if (user.role !== "ADMIN") {
+  if (!user || !user.id) {
+    window.location.href = "/";
+    return;
+  }
+
+  if (initialData && user.id !== initialData?.author?.id) {
     window.location.href = "/";
     return;
   }

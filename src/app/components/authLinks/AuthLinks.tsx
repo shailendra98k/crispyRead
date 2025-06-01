@@ -30,6 +30,13 @@ const AuthLinks = () => {
           >
             Contact
           </Link>
+          <Link
+            style={{ color: "rgb(158, 118, 88)" }}
+            onClick={() => setOpen(false)}
+            href="/login"
+          >
+            Login
+          </Link>
         </div>
       )}
     </>

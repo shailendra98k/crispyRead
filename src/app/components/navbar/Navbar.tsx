@@ -1,11 +1,19 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./navbar.module.css";
 import Image from "next/image";
 import Link from "next/link";
 import AuthLinks from "../authLinks/AuthLinks";
+import { useAppContext } from "@/app/providers/AppContextProvider";
+import { Loader } from "../loader";
 
 const Navbar = () => {
+  const { user } = useAppContext();
+  useEffect(() => {}, [user]);
+  if (!user) {
+    return <Loader />;
+  }
+  console.log("user", user.id);
   return (
     <div className={styles.container}>
       <div className={styles.logo}>
@@ -22,7 +30,7 @@ const Navbar = () => {
           </span>
         </Link>
       </div>
-      <div style={{display:'none'}} className={styles.links}>
+      <div className={styles.links}>
         <Link
           href="/about"
           className={styles.link}
@@ -36,6 +44,13 @@ const Navbar = () => {
           style={{ color: "#9e7658" }}
         >
           Contact
+        </Link>
+        <Link
+          href={user.id ? "/write" : "/login"}
+          className={styles.link}
+          style={{ color: "#9e7658" }}
+        >
+          {user.id ? "Write a post" : "Login"}
         </Link>
         <AuthLinks />
       </div>

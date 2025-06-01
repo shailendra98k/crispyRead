@@ -89,8 +89,8 @@ export const ReactQuillEditor = ({
   const handleSubmit = async () => {
     submitHandler({
       ...intialData,
-      id: intialData.id,
-      slug: intialData.slug,
+      id: intialData?.id,
+      slug: intialData?.slug,
       title,
       content: description,
       seoDescription,

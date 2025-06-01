@@ -9,6 +9,31 @@ const PostReadOnlyView = ({ params }) => {
   const { slug, id } = params;
   const { user } = useAppContext();
   const [post, setPost] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const handlePublishAndArchival = async () => {
+    if (!post || !id) {
+      return;
+    }
+    setLoading(true);
+    if (post.published) {
+      await CrispyReadClient.archivePosts([Number(id)]);
+      setPost(await CrispyReadClient.getPostById(id, slug));
+    } else {
+      await CrispyReadClient.publishPosts([Number(id)]);
+      setPost(await CrispyReadClient.getPostById(id, slug));
+    }
+    setLoading(false);
+  };
+
+  const handleEditPost = async () => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    window.location.href = `/write/${id}/${slug}`;
+    return;
+  };
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -18,6 +43,10 @@ const PostReadOnlyView = ({ params }) => {
   }, [slug, id]);
 
   if (post === null) {
+    return <Loader />;
+  }
+
+  if (loading) {
     return <Loader />;
   }
 
@@ -36,9 +65,20 @@ const PostReadOnlyView = ({ params }) => {
               background: post.published ? "#5f050f" : "green",
             }}
             className={styles.publish}
-            onClick={() => {}}
+            onClick={handlePublishAndArchival}
           >
             {post.published ? "Archive" : "Publish"}
+          </button>
+          <button
+            style={{
+              display:
+                user.username === post.author.username ? "block" : "none",
+              background: '#c4a30e',
+            }}
+            className={styles.publish}
+            onClick={handleEditPost}
+          >
+            Edit
           </button>
           <button className={styles.categoryBadge}>{post.category.name}</button>
           <h1>{post?.title}</h1>
