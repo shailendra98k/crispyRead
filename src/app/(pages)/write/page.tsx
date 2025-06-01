@@ -7,15 +7,18 @@ import React from "react";
 import CrispyReadClient from "@/app/client/CrispyReadClient";
 const WritePage = () => {
   const { user } = useAppContext();
+  const [loading, setLoading] = React.useState(false);
 
   const onSubmitHandler = async (data) => {
+    setLoading(true);
     const response: any = await CrispyReadClient.createPost(data);
     if (response && typeof window !== "undefined") {
       window.location.href = `/post/${response?.id}/${response?.slug}`;
     }
+    setLoading(false);
   };
 
-  if (!user) {
+  if (loading) {
     return <Loader />;
   }
 

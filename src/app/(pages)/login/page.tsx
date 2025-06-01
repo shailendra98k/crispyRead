@@ -1,11 +1,13 @@
 "use client";
 import CrispyReadClient from "@/app/client/CrispyReadClient";
+import { Loader } from "@/app/components/loader";
 import { Box, Button, TextField, Typography, Grid, Paper } from "@mui/material";
 import React from "react";
 import { useState } from "react";
 
 const SignInPage = () => {
   const [formData, setFormData] = useState({ username: "", password: "" });
+  const [loading, setLoading] = useState(false);
   const signIn = () => {
     CrispyReadClient.login(formData)
       .then((response: any) => {
@@ -28,8 +30,14 @@ const SignInPage = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
     signIn();
+    setLoading(false);
   };
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <Grid

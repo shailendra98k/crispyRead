@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import CrispyReadClient from "@/app/client/CrispyReadClient";
 import { Box, Button, TextField, Typography, Grid, Paper } from "@mui/material";
 const SignupPage: React.FC = () => {
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -26,8 +27,10 @@ const SignupPage: React.FC = () => {
   };
 
   const handleSubmit = (e: React.FormEvent) => {
+    setLoading(true);
     e.preventDefault();
     signUp();
+    setLoading(false);
   };
   return (
     <Grid

@@ -9,11 +9,13 @@ import { ReactQuillEditor } from "@/app/components/editor/ReactQuillEditor";
 
 const EditPage = ({ params }) => {
   const [initialData, setInitialData] = useState(null);
+  const [loading, setLoading] = useState(false);
   const { slug, id } = params;
   const { user } = useAppContext();
   console.log("EditPage user:", user);
 
   const onSubmitHandler = async (data) => {
+    setLoading(true);
     const response: any = await CrispyReadClient.updatePost({
       ...initialData,
       ...data,
@@ -21,18 +23,21 @@ const EditPage = ({ params }) => {
     if (response) {
       window.location.href = `/post/${response?.id}/${response?.slug}`;
     }
+    setLoading(false);
   };
 
   React.useEffect(() => {
+    setLoading(true);
     const fetchPost = async () => {
       const data = await CrispyReadClient.getPostById(id, slug);
       console.log("Fetched post data:", data);
       setInitialData(data);
     };
     fetchPost();
+    setLoading(false);
   }, [id, slug]);
 
-  if (!user || !initialData) {
+  if (loading) {
     return <Loader />;
   }
 

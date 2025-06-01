@@ -36,17 +36,15 @@ const PostReadOnlyView = ({ params }) => {
   };
 
   useEffect(() => {
+    setLoading(true);
     const fetchPost = async () => {
       setPost(await CrispyReadClient.getPostById(id, slug));
     };
     fetchPost();
+    setLoading(false);
   }, [slug, id]);
 
-  if (post === null) {
-    return <Loader />;
-  }
-
-  if (loading) {
+  if (post === null || loading) {
     return <Loader />;
   }
 
@@ -73,7 +71,7 @@ const PostReadOnlyView = ({ params }) => {
             style={{
               display:
                 user.username === post.author.username ? "block" : "none",
-              background: '#c4a30e',
+              background: "#c4a30e",
             }}
             className={styles.publish}
             onClick={handleEditPost}
