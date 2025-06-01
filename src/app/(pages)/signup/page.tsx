@@ -93,6 +93,14 @@ const SignupPage: React.FC = () => {
             <Button type="submit" variant="contained" color="primary" fullWidth>
               Sign Up
             </Button>
+            <Box mt={2}>
+              <Typography variant="body2" align="center">
+                Already have an account?{" "}
+                <a href="/login" style={{ textDecoration: "none" }}>
+                  Log In
+                </a>
+              </Typography>
+            </Box>
           </form>
         </Paper>
       </Grid>

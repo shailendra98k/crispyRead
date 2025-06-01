@@ -68,6 +68,14 @@ const SignInPage = () => {
             <Button type="submit" variant="contained" color="primary" fullWidth>
               Sign In
             </Button>
+            <Box mt={2}>
+              <Typography variant="body2" align="center">
+                {`Don't have an account?`}
+                <a href="/signup" style={{ textDecoration: "none" }}>
+                  Sign Up
+                </a>
+              </Typography>
+            </Box>
           </form>
         </Paper>
       </Grid>

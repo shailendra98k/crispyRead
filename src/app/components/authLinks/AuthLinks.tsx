@@ -1,11 +1,18 @@
 "use client";
 import Link from "next/link";
 import styles from "./authLinks.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import React from "react";
+import { useAppContext } from "@/app/providers/AppContextProvider";
+import { Loader } from "../loader";
 
 const AuthLinks = () => {
   const [open, setOpen] = useState(false);
+  const { user } = useAppContext();
+  useEffect(() => {}, [user]);
+  if (!user) {
+    return <Loader />;
+  }
 
   return (
     <>
@@ -33,9 +40,9 @@ const AuthLinks = () => {
           <Link
             style={{ color: "rgb(158, 118, 88)" }}
             onClick={() => setOpen(false)}
-            href="/login"
+            href={user.id ? "/write" : "/login"}
           >
-            Login
+            {user.id ? "Write a post" : "Login"}
           </Link>
         </div>
       )}
