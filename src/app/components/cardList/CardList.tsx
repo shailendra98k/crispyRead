@@ -5,10 +5,15 @@ import Card from "../card/Card";
 import { POST_PER_PAGE } from "@/utils/constant";
 import CategorySelect from "./CategorySelect";
 
-const CardList = ({ page = 0, category, posts, totalCount }) => {
-  console.log("totalCount", totalCount);
-  const hasPrev = POST_PER_PAGE * page > 0;
-  const hasNext = POST_PER_PAGE * page + POST_PER_PAGE < totalCount;
+const CardList = ({
+  page = 0,
+  category,
+  posts,
+  totalCount,
+  maxCardCount = POST_PER_PAGE,
+}) => {
+  const hasPrev = maxCardCount * page > 0;
+  const hasNext = maxCardCount * page + maxCardCount < totalCount;
   return (
     <div className={styles.container}>
       <div className={styles.categorySelection}>

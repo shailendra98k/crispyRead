@@ -15,6 +15,7 @@ export default function Home({ searchParams }) {
   const [totalCount, setTotalCount] = React.useState<number>(0);
 
   React.useEffect(() => {
+    setPosts([]);
     const fetchPosts = async () => {
       try {
         const response: any = await CrispyReadClient.getPosts(
@@ -58,6 +59,7 @@ export default function Home({ searchParams }) {
         posts={posts}
         page={page}
         category={""}
+        maxCardCount={POST_PER_PAGE_HOME_PAGE}
       />
       <CategoryList />
     </div>
